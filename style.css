@@ -1,0 +1,54 @@
+*{
+    text-align: center;
+}
+h1{
+    font-size: 60px;
+    margin-bottom: -50px;
+}
+h3{
+    font-size: 35px;
+}
+.ProfesioneelProfiel {
+    margin-left: 20%;
+    margin-right: 20%;
+    padding-bottom: 20px;
+    margin-bottom: 50px;
+    border-bottom: 5px solid #D4D3F5;
+}
+body {
+    background-color: #615EA8;
+    font-size: 30px;
+    color: #D4D3F5;
+}
+.Button, .ProjectButton {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
+    border-radius: 10px;
+    color: #cbc9ec;
+    font-size: 30px;
+    text-decoration: none;
+    clear:both;
+}
+div {
+    margin-bottom: 80px;
+}
+.ProjectButton {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.Button:hover, .ProjectButton:hover {
+    border: solid #D4D3F5;
+    background-color: #434275;
+}
+.ProjectThumb {
+    margin-bottom: -25px;
+    margin-right: 300px;
+    height: 70px;
+    width: 70px;
+    border-radius: 10px;
+}
