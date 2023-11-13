@@ -1,0 +1,11 @@
+#unity-container { 
+    margin-top: 2vw;
+    position: relative;
+    display: inline-block;
+    left: 25%;
+ }
+#unity-canvas{
+    background-color: rgb(32, 32, 32);
+    box-shadow: 0.5vw 0.5vw 0.5vw rgb(26, 26, 26);
+    border-radius: 3vw;
+}

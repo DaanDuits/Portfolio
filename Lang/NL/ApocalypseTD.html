@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <Title>Portfolio Daan Duits</Title>
+        <meta charset="utf-8">
+        <link rel="icon" href="/Image/Icons/ApocalypseTD.png">
+        <link rel="stylesheet" href="/CSS/style.css">
+        <link rel="stylesheet" href="/CSS/project.css">
+        <link rel="stylesheet" href="/CSS/unityBuild.css">
+    </head>
+    
+    <body>
+        <div id="page-container">
+            <div id="page-wrap">
+              <img class="Background" src="/Image/Background.png" alt="" >
+                <div class="Header">
+                    <figure class="Title">
+                        <h1>Daan Duits</h1>
+                        <h3>Unity gameplay developer</h3>
+                     </figure>
+                     <figure id="Buttons">
+                        <a href="Home.html">Home</a>
+                        <a href="aboutMe.html">About Me</a>
+                        <a href="Contact.html">Contact</a>
+                     </figure>
+                     <figure class="LanguageButtons">
+                        <img src="/Image/Logos/EN.png" alt="EN" onclick="switchLanguage('EN')">
+                        <img src="/Image/Logos/NL.png" alt="NL" onclick="switchLanguage('NL')">
+                     </figure>
+                </div>
+        
+                <h3>Apocalypse TD</h3>
+                <div id="unity-container" class="unity-desktop">
+                  <canvas id="unity-canvas" width=960 height=600></canvas>
+                  <div id="unity-loading-bar">
+                    <div id="unity-logo"></div>
+                    <div id="unity-progress-bar-empty">
+                      <div id="unity-progress-bar-full"></div>
+                    </div>  
+                  </div>
+                  <div id="unity-warning"> </div>
+                  <div id="unity-footer">
+                    <div id="unity-webgl-logo"></div>
+                    <div id="unity-fullscreen-button"></div>
+                  </div>
+                </div>
+                <div id="mobile" style="margin-top: 2vw; position: relative; left: 15%; visibility: invisible; display: none;">
+                  <video style=" width: 70vw; height: 39.375vw;  background-color: rgb(32, 32, 32); box-shadow: 0.5vw 0.5vw  0.5vw  rgb(26, 26, 26); border-radius: 3vw;" src="/video/ApocalypseTD.mp4" autoplay="autoplay" muted="muted" loop="loop"></video>
+                </div>
+                <div class="sources">
+                  <a class="source" href="https://github.com/DaanDuits/Tower-Defense"><img src="/Image/Logos/GithubLogo.png" alt="Github" title="Go to github page"></a>
+                  <a class="source" href="https://daanbanaan.itch.io/apocalypse-td"><img src="/Image/Logos/ItchLogo.png" alt="Itch" title="Go to itch page"></a>
+                  <a class="download" href="/Builds/ApocalypseTD1_1Build.zip">Download</a>
+                </div>
+
+                <div class="toggle-container" onclick="Toggle()">
+                  <div class="toggle"></div>
+                  <div class="toggle-text">praktisch</div>
+                  <div class="toggle-text">technisch</div>
+                </div>
+
+
+                <div id="practical">
+                  <div id="practical-description"> 
+                    In de eerste periode van mijn tweede schooljaar heb ik de 2D topdown tower defense Apocalypse TD gemaakt.
+                    We kregen 10 weken de tijd om een tower defense spel te maken. Mijn idee was om een topdown tower defense te maken
+                    waarin jij kiest waar op de map jouw basis staat en de zombies daarnaartoe pathfinden. Eerst wilde ik voor het pathfinden flow fields gebruiken
+                    maar de zombies bleven aan elkaar haken in krappe plekken, ook werkte het niet optimaal op de kleine mappen. Dus besloot ik de A* algoritme implementatie van
+                    Sebastian Lague op youtube te gebruiken. Hij legt super goed de theorie uit hoe A* werkt uit maar ook hoe je het implementeert in zijn playlist. Ook heb ik veel geleerd
+                    over state machines en hoe de torens berekenen waar ze naartoe moeten schieten om een zombie te raken.
+                  </div>
+                  <div style="white-space: pre-line;" id="practical-description">Bekende bugs:
+                    Zombies stoppen met pathfinden als ze een decoy toren hebben gesloopt.
+                  </div>
+                  <a style="margin-top: 1vw; display: block;" href="https://www.youtube.com/watch?v=-L-WgKMFuhE&list=PLFt_AvWsXl0cq5Umv3pMC9SPnKjfp9eGW">https://www.youtube.com/watch?v=-L-WgKMFuhE&list=PLFt_AvWsXl0cq5Umv3pMC9SPnKjfp9eGW</a>
+                </div>
+
+                <div id="technical" style="display: none; visibility: invisible;">
+                  <h2>Enemy AI met A* pathfinding</h2>
+                  <div class="description">
+                    <div class="description-text">
+                      In deze documentatie leg ik uit hoe ik door middel van Sebastian Lauges A* algorithme implementatie mijn eigen vorm van het algorithme heb
+                      gemaakt.
+                    </div>
+                    <h3>De GridController en de Node scripts</h3>
+                    <div class="description-text">
+                      De Node class is een standaard C# class waarin alle variabelen van een Node staan. Ook zijn er een paar functies die
+                      helpen met het berkenenen van values en het optimaliseren op de heap.
+                    </div>
+<div class="code-snippet">// Het Node.cs script zonder functies
+public class Node : IHeapItem&lt;Node&gt;
+{
+    public bool walkable;
+    public Vector2 worldPos;
+    public int gridX, gridY;
+
+    public int gCost;
+    public int hCost;
+    public Node parent;
+    public List&lt;Node&gt; neighbours;
+    int heapIndex;
+
+    public Node(bool _walkable, Vector2 _worldPos, int _gridX, int _gridY)
+    {
+        walkable = _walkable;
+        worldPos = _worldPos;
+        gridX = _gridX;
+        gridY = _gridY;
+    }
+
+    // De fCost van de node is een berekening die de gCost en hCost optelt
+    public int fCost
+    {
+        get
+        {
+            return gCost + hCost;
+        }
+    }
+} </div>
+                    <div class="description-text">
+                      Omdat node het IHeapItem interface gebruikt heeft het de int HeapIndex nodig en de CompareTo functie.
+                      CompareTo vergelijkt de gegeven Node met de node waarop CompareTo op aangeroepen word op hun Fcost of Hcost.
+                    </div>
+<div class="code-snippet">public int HeapIndex
+{
+    get
+    {
+        return heapIndex;
+    }
+    set
+    {
+        heapIndex = value;
+    }
+}
+
+public int CompareTo(Node nodeToCompare)
+{
+    int compare = fCost.CompareTo(nodeToCompare.fCost);
+    if (compare == 0)
+    {
+        compare = hCost.CompareTo(nodeToCompare.hCost);
+    }
+    return -compare;
+}</div>       
+                    <div class="description-text">
+                      De GridController is het script wat alle nodes in een grid genereerd en checkt wat de buren van elke node is.
+                      Ook regelt het waar je nodes kan vinden met een world position.
+                    </div>
+                    <img src="/Image/EngineSnippets/Unity/IO_GridController.png" class="engine-snippet" alt="Alle public fields in GridController">
+                    <div class="description-text">
+                      In Awake worden alle private fields hun value berekent door te kijken naar hoe groot de map moet worden.
+                    </div>
+<div class="code-snippet">
+private void Awake()
+{
+    // Ik zoek hier naar de EnemyController zodat ik die later kan gebruiken voor het zoeken naar het spawn punt en het geven van het pad
+    // Dit is in het normale algorithme niet nodig
+    ec = GetComponent&lt;EnemyController&gt;();
+    tilemap = ec.level.gameObject.transform.GetChild(1).GetComponent&lt;Tilemap&gt;();
+    nodeDiameter = nodeRadius * 2;
+    gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
+    gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
+
+    CreateGrid();
+}
+
+// MaxSize is de totale grootte van de map
+public int MaxSize
+{
+    get
+    {
+        return gridSizeX * gridSizeY;
+    }
+}</div>             
+                    <div class="description-text">
+                      In CreateGrid word de grid van nodes gecreerd. Dit gebeurt door een dubbele for loop door door
+                      de totale breedte en hoogte te loopen en op elk van die punten in de 2 dimensionaale grid een nieuwe Node aan
+                      te maken.
+                    </div>
+<div class="code-snippet">void CreateGrid()
+{
+    grid = new Node[gridSizeX, gridSizeY];
+    Vector2 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.up * gridWorldSize.y / 2;
+
+    for (int x = 0; x < gridSizeX; x++)
+    {
+        for (int y = 0; y < gridSizeY; y++)
+        {
+            Vector2 worldPoint = worldBottomLeft + Vector2.right * (x * nodeDiameter + nodeRadius) + Vector2.up * (y * nodeDiameter + nodeRadius);
+            // Ik werk met een tilemap maar als er geen tilemap gebruikt word kan een van de cast functies van Physics2D of een van de Check functies van Physics (3D) hier gebruikt worden
+            bool walkable = tilemap.HasTile(tilemap.WorldToCell(worldPoint)) || ec.possibleSpawns.Contains(worldPoint);
+
+            grid[x, y] = new Node(walkable, worldPoint, x, y);
+        }
+    }
+    // Verkrijg alle buur nodes
+    foreach (Node n in grid)
+    {
+        grid[n.gridX, n.gridY].neighbours = GetNeighbours(grid[n.gridX, n.gridY]);
+    }
+}</div>
+                    <div class="description-text">
+                      De GetNeighbours functie returned een lijst van alle nodes die naast de gegeven node staan.
+                      Als er geen node word gevonden naast de gegeven node word er geen node toegevoegd aan de list om Null reference exceptions te voorkomen.
+                    </div>
+<div class="code-snippet">public List&lt;Node&gt; GetNeighbours(Node node)
+{
+    List&lt;Node&gt; neighbours = new List&lt;Node&gt;();
+
+    for (int x = -1; x &lt;= 1; x++)
+    {
+        for (int y = -1; y &lt;= 1; y++)
+        {
+            if (x == 0 && y == 0)
+                continue;
+           
+            int checkX = node.gridX + x;
+            int checkY = node.gridY + y;
+           
+            if (checkX &gt;= 0 && checkX &lt; gridSizeX && checkY &gt;= 0 && checkY &lt; gridSizeY && grid[checkX, checkY].walkable)
+            {
+                if (ec.level.firstTile.Any(p =&gt; p == grid[checkX, checkY].worldPos) && ec.level.firstTileDir.Any(p =&gt; p == new Vector2Int(x,y)))
+                {
+                    neighbours.Add(grid[checkX, checkY]);
+                    continue;
+                }
+                if (ec.level.entrance.Any(p =&gt; p == grid[checkX, checkY].worldPos) && ec.level.entranceDir.Any(p =&gt; p == new Vector2Int(x, y)))
+                {
+                    neighbours.Add(grid[checkX, checkY]);
+                    continue;
+                }
+                if ((tilemap.HasTile(tilemap.WorldToCell(grid[checkX, checkY].worldPos)) && tilemap.HasTile(tilemap.WorldToCell(node.worldPos))) || (ec.possibleSpawns.Contains(node.worldPos) && ec.possibleSpawns.Contains(grid[checkX, checkY].worldPos)))
+                {
+                    neighbours.Add(grid[checkX, checkY]);
+                }
+            }
+        }
+    }
+     
+    return neighbours;
+}</div>
+                    <div class="description-text">
+                      In NodeFromWorldPoint word er gezogd naar een Node in de grid met een world position.
+                      Dit doe je door te berekenen waar in de grid de world position die je wilt hebben zit. Als dit buiten de grid is 
+                      word het automatisch de rand door de percentage te clampen tussen 0 en 1. Vervolgens rond je het getal af naar een int
+                      en vermenig vuldig je het met de breedte/hoogte van de grid - 1 en zo krijg je de 2D coordinaten op de grid.
+                    </div>
+<div class="code-snippet">public Node NodeFromWorldPoint(Vector2 worldPosition, bool target)
+{
+    // Omdat de speler's basis een 2*2 vakje opneemt check ik hier naar welk van de 4 vakjes de tartget word
+    System.Random prng = new System.Random();
+    if (target)
+    {
+        int posX = prng.Next(0, 2);
+        int posY = prng.Next(0, 2);
+        switch (posX, posY)
+        {
+            case (0, 1):
+                worldPosition.x -= 0.5f;
+                worldPosition.y += 0.5f;
+                break;
+            case (1, 1):
+                worldPosition.x += 0.5f;
+                worldPosition.y += 0.5f;
+                break;
+            case (0, 0):
+                worldPosition.x -= 0.5f;
+                worldPosition.y -= 0.5f;
+                break;
+            case (1, 0):
+                worldPosition.x += 0.5f;
+                worldPosition.y -= 0.5f;
+                break;
+        }
+    }
+    // Dit is de normale berkenening voor het vinden van een van de nodes
+    float percentX = ((worldPosition.x) + gridWorldSize.x / 2) / gridWorldSize.x;
+    float percentY = ((worldPosition.y) + gridWorldSize.y / 2) / gridWorldSize.y;
+    percentX = Mathf.Clamp01(percentX);
+    percentY = Mathf.Clamp01(percentY);
+
+    int x = Mathf.RoundToInt((gridSizeX - 1) * percentX);
+    int y = Mathf.RoundToInt((gridSizeY - 1) * percentY);
+    return grid[x, y];
+}</div>
+                    <h3>De pathfinding implementatie</h3>
+                    <div class="description-text">
+                      Dus nu we een grid met nodes hebben gegenereerd moeten we nu alle pathfinding berekeningen toevoegen. Hiervoor is de Pathfinding class.
+                    </div>
+                    <div class="description-text">
+                      In awake zoek ik naar alle benodigde private fields.
+                    </div>
+<div class="code-snippet">private void Awake()
+{
+    requestManager = GetComponent&lt;PathRequestManager&gt;();
+    grid = GetComponent&lt;GridController&gt;();
+}</div>
+                    <div class="description-text">
+                      FindPath is een IEnumerator dat betekent dat we alles erin kunnen uitspreiden over meerdere frames. De loop checkt alle
+                      buren van de currentNode en of er overeen gelopen kan worden dan berekent hij van elk van die buren de gCost en Hcost,
+                      en word de openset geupdate met de nieuwe costs van die buur.
+                    </div>
+<div class="code-snippet">public void StartFindPath(Vector2 startPos, Vector2 tartgetPos, bool mainBase)
+{
+    StartCoroutine(FindPath(startPos, tartgetPos, mainBase));
+}
+
+IEnumerator FindPath(Vector2 startPos, Vector2 targetPos, bool mainBase)
+{
+    Vector2[] wayPoints = new Vector2[0];
+    bool pathSucces = false;
+    Node startNode = grid.NodeFromWorldPoint(startPos, false);
+    Node targetNode;
+
+    // Hier controlleer ik of er naar een base moet worden gelopen of naar een decoy
+    if (mainBase)
+        targetNode = grid.NodeFromWorldPoint(targetPos, true);
+    else
+        targetNode = grid.NodeFromWorldPoint(targetPos, false);
+
+    if (startNode.walkable && targetNode.walkable)
+    {
+        Heap&lt;Node&gt; openSet = new Heap&lt;Node&gt;(grid.MaxSize);
+        HashSet&lt;Node&gt; closedSet = new HashSet&lt;Node&gt;();
+        openSet.Add(startNode);
+        while (openSet.Count &gt; 0)
+        {
+            Node currentNode = openSet.RemoveFirst();
+            closedSet.Add(currentNode);
+
+            if (currentNode == targetNode)
+            {
+                pathSucces = true;
+                break;
+            }
+
+            foreach (Node neighbour in currentNode.neighbours)
+            {
+                if (!neighbour.walkable || closedSet.Contains(neighbour))
+                {
+                    continue;
+                }
+
+                int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+                if (newMovementCostToNeighbour &lt; neighbour.gCost || !openSet.Contains(neighbour))
+                {
+                    neighbour.gCost = newMovementCostToNeighbour;
+                    neighbour.hCost = GetDistance(neighbour, targetNode);
+                    neighbour.parent = currentNode;
+
+                    if (!openSet.Contains(neighbour))
+                        openSet.Add(neighbour);
+                    else
+                        openSet.UpdateItem(neighbour);
+                }
+            }
+        }
+    }
+    // Hier wacht de coroutine 1 frame zodat de volgende frame het volgende pad gevonden kan worden
+    yield return null;
+    if (pathSucces)
+    {
+        wayPoints = RetracePath(startNode, targetNode);
+    }
+    requestManager.FinishedProcessingPath(wayPoints, pathSucces);
+}</div>
+                    <div class="description-text">
+                      Met GetDistance zoek je naar de distance tussen 2 Nodes dus als de buur 1 omhoog en 1 opzij zit returned het 14, Als
+                      de buur alleen ernaast of erboven zit returned het 10.
+                    </div>
+<div class="code-snippet">int GetDistance(Node nodeA, Node nodeB)
+{
+    int distX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
+    int distY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
+
+    if (distX > distY)
+        return 14 * distY + 10 * (distX - distY);
+    return 14 * distX + 10 * (distY - distX);
+}</div>
+                    <div class="description-text">
+                      RetracePath zorgt ervoor dat het pad een Vector2 array word in plaats van nodes zodat het goedkoper voor de memory en het het makkelijker maakt om te traversen.
+                      Eerst worden vanaf het einde naar de start alle nodes toegevoegd daarna worden al die posities in een list gedaan, maar omdat de path list van einde naar begin
+                      staat moet de array omgedraaid worden. En zo krijg je dus het pad van begin naar eind in posities.
+                    </div>
+<div class="code-snippet">Vector2[] RetracePath(Node startNode, Node endNode)
+{
+    List&lt;Node&gt; path = new List&lt;Node&gt;();
+    Node currentNode = endNode;
+
+    while (currentNode != startNode)
+    {
+        path.Add(currentNode);
+        currentNode = currentNode.parent;
+    } 
+    List&lt;Vector2&gt; nodePoints = new List&lt;Vector2&gt;();
+    for (int i = 0; i &lt; path.Count; i++)
+    {
+        nodePoints.Add(path[i].worldPos);
+    }
+
+    Vector2[] wayPoints = nodePoints.ToArray();
+    Array.Reverse(wayPoints); 
+    return wayPoints;
+}</div>
+
+                    <h3>Heap optimalisatie en path requests</h3>
+                    <div class="description-text">
+                     Nadat we de pathfinding hebben gemaakt kunnen we iets genaamd heaps gebruiken om de berekening sneler te laten gaan. Ook kunnen we er voor zorgen dat
+                     elke keer als eer een pad word gevraagd ze niet tegelijkertijd berekent worden maar in een soort wachtrij stopt om per frame te berekenen.
+                    </div>
+                    <div class="description-text">
+                      Een heap lijkt erg op een array alleen lijkt het meer op een stamboom dan op een sequence als je het tekent. Elke item van de heap heeft maximaal 2 child items 
+                      inplaats van de array's 1. 
+                    </div>
+                    <img src="/Image/EngineSnippets/Unity/HeapLayout.png" class="engine-snippet" alt="Heap index hierarchie">
+                    <div class="description-text">
+                      In de heap soorteer je naar boven door met de parent te vergelijken als de parent een hogere waarde heeft dan de gecontrolleerde child worden ze verwisseld met elkaar.
+                    </div>
+                    <video src="/video/HeapAnimation_1.mp4" class="engine-snippet" alt="Hoe de heap items worden gesoorteerd voor de pathfinding als er een nieuwe item bij komt onderaan in de hierarchie" autoplay="autoplay" muted="muted" loop="loop"></video>
+                    <div class="description-text">
+                      In de heap soorteer je naar beneden door te kijken welke child de laagste waarde heeft en als de waarde van de node een hogere
+                      waarde heeft dan die van de child met de laagste value de item en child te verwisselen.
+                    </div>
+                    <video src="/video/HeapAnimation_2.mp4" class="engine-snippet" alt="Hoe de heap items worden gesoorteerd voor de pathfinding als er een nieuwe item bij komt bovenaan in de hierarchie" autoplay="autoplay" muted="muted" loop="loop"></video>
+                    <div class="description-text">
+                      IHeapItem is een generieke interface die inherit van ICompareble (ook generiek), dit betekent dat alles wat de IHeapItem interface gebruikt ook een 
+                      CompareTo functie nodig heeft. IHeapItem heeft alleen een heapindex int nodig.    
+                    </div>
+<div class="code-snippet">public interface IHeapItem&lt;T&gt; : IComparable&lt;T&gt;
+{
+    int HeapIndex
+    {
+        get;
+        set;
+    }
+}</div>              
+                    <div class="description-text">
+                      De Heap class is een generieke class waarin object T de interface IHeapItem moet gebruiken. In de constructor word een nieuwe
+                      array aangemaakt met de aangegeven lengte. Count is de grootte van de heap.
+                    </div>
+<div class="code-snippet">public class Heap&lt;T&gt; where T : IHeapItem&lt;T&gt;
+{
+    T[] items;
+    int currentItemCount;
+  
+    public Heap(int maxHeapSize)
+    {
+        items = new T[maxHeapSize];
+    } 
+
+    public int Count
+    {
+        get
+        {
+            return currentItemCount;
+        }
+    }
+}</div>              
+                    <div class="description-text">
+                      Als er een nieuwe item word toegevoegd word de HeapIndex van dat item goed gezet en word hij aan de array toegevoegd.
+                      vervolgens word hij naar boven gesoorteerd en de itemCount omhoog gehaald.
+                    </div>
+<div class="code-snippet">public void Add(T item)
+{
+    item.HeapIndex = currentItemCount;
+    items[currentItemCount] = item;
+    SortUp(item);
+    currentItemCount++;
+}</div>              
+                    <div class="description-text">
+                      Als het eerste item word verwijderd word de nieuwe eerste item naar beneden gesoorteerd.
+                    </div>
+<div class="code-snippet">public T RemoveFirst()
+{
+    T firstItem = items[0];
+    currentItemCount--;
+    items[0] = items[currentItemCount];
+    items[0].HeapIndex = 0;
+    SortDown(items[0]);
+
+    return firstItem;
+}</div>              
+                    <div class="description-text">
+                      Als er een item al in de heap zit word hij geupdate door deze functie.
+                    </div>
+<div class="code-snippet">public void UpdateItem(T item)
+{
+    SortUp(item);
+}</div>
+                    <div class="description-text">
+                      Als je een specifiek item zoekt dan kan je hem hiermee vinden.
+                    </div>
+<div class="code-snippet">public bool Contains(T item)
+{
+    return Equals(items[item.HeapIndex], item);
+}</div>
+                    <div class="description-text">
+                      Voor SortUp de juiste children te vinden is heel simpel als je bijvoorbeeld de children van heapindex 5 wilt hebben dan kan je 5 * 2 is 10 + 1
+                      is 11 en 10 + 2 is 12 doen dit zijn de 2 indeces van de children van het 5de item in de heap. En als je de parent zoekt van een item is het bijvoorbeeld
+                      10 - 1 is 9 / 2 is 4.5 en omdat ints altijd naar beneden worden afgerond dus 4 en dit geld ook voor index 9.
+                    </div>
+<div class="code-snippet">void SortDown(T item)
+{
+    while(true)
+    {
+        int childIndexLeft = item.HeapIndex * 2 + 1;
+        int childIndexRight = item.HeapIndex * 2 + 2;
+        int swapIndex = 0;
+
+        if (childIndexLeft < currentItemCount)
+        {
+            swapIndex = childIndexLeft;
+
+            if (childIndexRight < currentItemCount)
+                if (items[childIndexLeft].CompareTo(items[childIndexRight]) < 0)
+                    swapIndex = childIndexRight;
+
+            if (item.CompareTo(items[swapIndex]) < 0)
+                Swap(item, items[swapIndex]);
+            else
+                return;
+        }
+        else
+            return;
+    }
+}
+
+void SortUp(T item)
+{
+    int parentIndex = (item.HeapIndex - 1) / 2;
+    while (true)
+    {
+        T parentItem = items[parentIndex];
+        if (item.CompareTo(parentItem) > 0)
+        {
+            Swap(item, parentItem);
+        }
+        else
+        {
+            break;
+        }
+
+        parentIndex = (item.HeapIndex - 1) / 2;
+    }
+}</div>
+                    <div class="description-text">
+                      Als de items verwisseld moeten worden worden hun indexes omgedraaid en hun positie in de array aangepast.
+                    </div>
+<div class="code-snippet">void Swap(T itemA, T itemB)
+{
+    items[itemA.HeapIndex] = itemB;
+    items[itemB.HeapIndex] = itemA;
+    int itemAIndex = itemA.HeapIndex;
+    itemA.HeapIndex = itemB.HeapIndex;
+    itemB.HeapIndex = itemAIndex;
+}</div>
+                    <div class="description-text">
+                      In de PathRequestManager word een queue aan gemaakt waarin alle pathrequests in komen, pathrequest is een struct waarin alle info over het verzoek staan.
+                    </div>
+<div class="code-snippet">struct PathRequest
+{
+    public Vector2 pathStart;
+    public Vector2 pathEnd;
+    public Action&lt;Vector2[], bool&gt; callback;
+    public bool mainBase;
+
+    public PathRequest(Vector2 _start, Vector2 _end, Action&lt;Vector2[], bool&gt; _callback, bool _mainBase)
+    {
+        pathStart = _start;
+        pathEnd = _end;
+        callback = _callback;
+        mainBase = _mainBase;
+    }
+}</div>
+                    <div class="description-text">
+                      elke keer als er een pathrequest word aangemaakt word die toegevoegd aan de queue en als er geen path geprocessed word word er een nieuwe coroutine 
+                      (zie pathfinding class) gestart. Als er een path succesfol is gevonden word de callback functie van die request aangeroepen.
+                    </div>
+<div class="code-snippet">public static void RequestPath(Vector2 pathStart, Vector2 pathEnd, Action&lt;Vector2[], bool&gt; callback, bool mainBase)
+{
+    PathRequest newRequest = new PathRequest(pathStart, pathEnd, callback, mainBase);
+    instance.pathRequestQueue.Enqueue(newRequest);
+    instance.TryProcessNext();
+}
+
+void TryProcessNext()
+{
+    if (!isProcessingPath && pathRequestQueue.Count > 0)
+    {
+        currentPathRequest = pathRequestQueue.Dequeue();
+        isProcessingPath = true;
+        pathFinding.StartFindPath(currentPathRequest.pathStart, currentPathRequest.pathEnd, currentPathRequest.mainBase);
+    }
+}
+
+public void FinishedProcessingPath(Vector2[] path, bool succes)
+{
+    currentPathRequest.callback(path, succes);
+    isProcessingPath = false;
+    TryProcessNext();
+}</div>
+                    <h3>Terugblik</h3>
+                    <div class="description-text">
+                      Als ik terug kijk op dit project zie ik dat ik sommige dingen maar gewoon even snel in elkaar heb getypt wat leidde tot spagetti code. 
+                      Toch wil ik dit spel ooit overnieuw maken en de pathfinding reworken omdat ik het een heel interessant idee vind.
+                    </div>
+              </div>
+             </div>
+             
+             <footer>
+                  
+             </footer>
+          </div>
+      </div>
+     </body>
+
+    <script src="/langSwitch.js"></script>
+    <script src="/toggle.js"></script>
+    <script src="/codeCreator.js"></script>
+    <script>
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
+
+      var mobileContainer = document.querySelector("#mobile");
+
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
+      function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
+        }
+        updateBannerVisibility();
+      }
+
+      var buildUrl = "/ApocalypseTD1_1Web/Build";
+      var loaderUrl = buildUrl + "/ApocalypseTD1_1Web.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/ApocalypseTD1_1Web.data",
+        frameworkUrl: buildUrl + "/ApocalypseTD1_1Web.framework.js",
+        codeUrl: buildUrl + "/ApocalypseTD1_1Web.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Tower Defense",
+        productVersion: "1.1",
+        showBanner: unityShowBanner,
+      };
+
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+        container.style.visibility = "invisible";
+        container.style.display = "none";
+        mobileContainer.style.visibility = "visible";
+        mobileContainer.style.display = "inline-block";
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        container.className = "unity-mobile";
+
+        // To lower canvas resolution on mobile devices to gain some
+        // performance, uncomment the following line:
+        // config.devicePixelRatio = 1;
+      } else {
+        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+
+        canvas.style.width = "50vw";
+        canvas.style.height = "28.125vw";
+      }
+
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+</html>

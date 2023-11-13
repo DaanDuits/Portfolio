@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <Title>Portfolio Daan Duits</Title>
+        <link rel="stylesheet" href="/CSS/style.css">
+        <link rel="stylesheet" href="/CSS/project.css">
+    </head>
+    
+    <body>
+        <div id="page-container">
+            <div id="page-wrap">
+              <img class="Background" src="/Image/Background.png" alt="" >
+              <div class="Header">
+                  <figure class="Title">
+                      <h1>Daan Duits</h1>
+                      <h3>Unity gameplay developer</h3>
+                   </figure>
+                   <figure id="Buttons">
+                      <a href="Home.html">Home</a>
+                      <a href="aboutMe.html">About Me</a>
+                      <a href="Contact.html">Contact</a>
+                   </figure>
+                   <figure class="LanguageButtons">
+                      <img src="/Image/Logos/EN.png" alt="EN" onclick="switchLanguage('EN')">
+                      <img src="/Image/Logos/NL.png" alt="NL" onclick="switchLanguage('NL')">
+                   </figure>
+              </div>
+        
+              <h3>After the Fall - Vertical Slice</h3>
+              <div id="video">
+                  <video src="/video/ATFvid.mp4" autoplay="autoplay" muted="muted" loop="loop"></video>
+              </div>   
+              <div class="toggle-container" onclick="Toggle()">
+                <div class="toggle"></div>
+                <div class="toggle-text">praktisch</div>
+                <div class="toggle-text">technisch</div>
+              </div>
+
+              <div id="practical">
+                <h2>Werken voor Vertigo games in het XR-Lab</h2>
+                <div id="practical-description"> 
+                  In de tweede periode van mijn tweede schooljaar heb ik bij het XR-Lab 
+                  in Hilversum samen gewerkt met 10 game art studenten en 11 game development studenten
+                  om een deel van de VR shooter After the faal van Vertigo games te recreeren. Dit moesten we
+                  doen in Unreal engine 5 in plaats van Unity waar After the fall in is gemaakt. Tijdens het maken 
+                  van het spel hebben we 2 developers die aan After the fall hebben gewerkt ontmoet en hebben we geleerd
+                  wat voor bugs en struggles zij hadden tijdens het maken van de game.
+                </div>
+              </div>
+  
+              <div id="technical" style="display: none; visibility: invisible;">
+                <h2>Werken met Unreal Engine 5</h2>
+                <div class="description-text">
+                  Tijdens deze periode heb ik voor de eerste keer gewerkr met Unreal Engine. Ik heb niet de C++ editor gebruikt maar inplaats daarvan de blueprints, ik heb nogsteeds 
+                  best veel geleerd over de engine en zijn features. Maar ik vind het niet fijn dat veel componenten al zeer gedetaileerd gemaakt zijn inplaats van in Unity die 
+                  jou activeert om zelf je eigen componenten te maken. Alsnog wil ik meer over de engine leren en zijn C++ editor.
+                </div>
+                  <h2>Enemy AI met unreal behaviour trees</h2>
+                <div class="description">
+                  <div class="description-text">
+                    De Unreal engine 5 behaviour trees zijn makkelijk te gebruiken en te leren. Deze behaviour tree regelt de movement en het aanvallen 
+                    van de zombies in After the fall - vertical slice.
+                    Elke keer dat de zombie ergens naartoe loopt checkt hij of hij de speler kan zien en als dat zo is gaat hij daar naartoe en
+                    speelt zijn aanval animatie.
+                    Helaas ben ik het originele project kwijt geraakt en dus ook de code bestanden die ik gemaakt heb. Dit is de enige afbeelding die ik heb gevonden van de behaviour tree.
+                  </div>
+                  <img src="/Image/EngineSnippets/Unreal/BehaviourTree.png" class="engine-snippet" alt="Unreal engine behaviour tree for zombies">
+                </div>
+              </div>
+             <footer>
+                  
+             </footer>
+          </div>
+      </div>
+     </body>
+
+    <script src="/langSwitch.js"></script>
+    <script src="/toggle.js"></script>
+</html>

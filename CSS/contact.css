@@ -1,0 +1,161 @@
+#page-wrap > h3{
+    margin-top: 8vw;
+    position: relative;
+    font-size: 3.5vw;
+    text-align: center;
+    color: rgb(124, 157, 201);
+}
+#page-wrap {
+    padding-bottom: 11.1vh; 
+}
+
+#info{
+    width: 30vw;
+    display: block;
+    margin: 0 auto 0 auto;
+}
+#info > p{
+    font-size: 0.9vw;
+    margin-top: 3vw;
+    width: 30vw;
+    color: rgb(207, 207, 207);
+}
+
+#links{
+    background-color: rgba(43, 43, 43, 0.76);
+    width: 50vw;
+    display: block;
+    margin-left: auto; margin-right: auto;
+    margin-top: 3vw;
+    border-radius: 1vw;
+    padding: 1vw;
+
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; 
+}
+#links > a > img{
+    width: 4vw;
+}
+#download{
+    width: 8vw;
+    background-color: green;
+    text-align: center;
+    line-height: 4vw;
+    border-radius: 1vw;
+    font-size: 1vw;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s;
+}
+#download:hover{
+    background-color: rgb(0, 148, 0);
+}
+
+#contact-form{
+    width: 30vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+input[type='text']{
+    background-color: rgba(20, 20, 20, 0.733);
+    border-radius: 0.5vw;
+    padding: 0.5vw;
+    border: 0.2vw solid rgb(109, 109, 109);
+    color: rgb(207, 207, 207);
+    font-family: TT;
+    width: 15vw;
+    height: 1.5vw;
+    font-size: 1vw;
+}
+
+textarea{
+    resize: none;
+    background-color: rgba(20, 20, 20, 0.733);
+    border-radius: 0.5vw;
+    padding: 0.5vw;
+    border: 0.2vw solid rgb(109, 109, 109);
+    color: rgb(207, 207, 207);
+    font-family: TT;
+    width: 30vw;
+    font-size: 1vw;
+    width: 30vw;
+    height: 10vw;
+}
+button{
+    width: 7.5vw;
+    margin-top: 1vw;
+    border-radius: 0.5vw;
+    padding: 0.3vw;
+    font-size: 1.5vw;
+    color: rgb(45, 45, 45);
+    border: 0.2vw solid rgb(90, 90, 90);
+    transition: background-color 0.3s;
+    font-family: P-one;
+    margin-bottom: 2vw;
+}
+button:hover{
+    background-color: rgb(192, 192, 192);
+}
+label{
+    margin-top: 1vw;
+    color: rgb(201, 201, 201);
+    display: block;
+    font-size: 1.5vw;
+}
+
+@media screen and (max-width: 1179px){
+    #page-wrap > h3{
+        position: relative;
+        margin-top: 22vw;
+        font-size: 6vw;
+        text-align: center;
+        color: rgb(124, 157, 201);
+    }
+    #page-wrap {
+        padding-bottom: 11.1vh; 
+    }
+    #info{
+        width: 50vw;
+        display: block;
+        margin: 0 auto 0 auto;
+    }
+    #info > p{
+        font-size: 1.5vw;
+        margin-top: 3vw;
+        width: 50vw;
+        color: rgb(207, 207, 207);
+    }
+    #links{
+        background-color: rgba(43, 43, 43, 0.76);
+        width: 70vw;
+        display: block;
+        margin-left: auto; margin-right: auto;
+        margin-top: 5vw;
+        border-radius: 1vw;
+        padding: 2vw;
+        margin-bottom: 22vw;
+    
+        display: grid;
+        justify-items: center;
+        grid-template-columns: 1fr 1fr 1fr; 
+    }
+    #links > a > img{
+        width: 10vw;
+    }
+    .bottom-row{
+        margin-top: 4vw;
+    }
+    #download{
+        width: 20vw;
+        height: 10vw;
+        background-color: green;
+        text-align: center;
+        line-height: 10vw;
+        border-radius: 2vw;
+        font-size: 2vw;
+        text-decoration: none;
+        color: white;
+        transition: background-color 0.3s;
+    }
+}

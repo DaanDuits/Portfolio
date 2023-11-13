@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <Title>Portfolio Daan Duits</Title>
+        <link rel="stylesheet" href="/CSS/style.css">
+        <link rel="stylesheet" href="/CSS/project.css">
+    </head>
+    
+    <body>
+        <div id="page-container">
+            <div id="page-wrap">
+              <img class="Background" src="/Image/Background.png" alt="" >
+              <div class="Header">
+                  <figure class="Title">
+                      <h1>Daan Duits</h1>
+                      <h3>Unity gameplay developer</h3>
+                   </figure>
+                   <figure id="Buttons">
+                    <a href="Home.html">Home</a>
+                    <a href="aboutMe.html">About Me</a>
+                    <a href="Contact.html">Contact</a>
+                   </figure>
+                   <figure class="LanguageButtons">
+                      <img src="/Image/Logos/EN.png" alt="EN" onclick="switchLanguage('EN')">
+                      <img src="/Image/Logos//NL.png" alt="NL" onclick="switchLanguage('NL')">
+                   </figure>
+              </div>
+        
+              <h3>After the Fall - Vertical Slice</h3>
+              <div id="video">
+                  <video src="/video/ATFvid.mp4" autoplay="autoplay" muted="muted" loop="loop"></video>
+              </div>
+              <div class="toggle-container" onclick="Toggle()">
+                <div class="toggle"></div>
+                <div class="toggle-text">practical</div>
+                <div class="toggle-text">technical</div>
+              </div>
+
+              <div id="practical">
+                <h2>Working for Vertigo games in the XR-Lab</h2>
+                <div id="practical-description">
+                  For the second quarter of my second year of school I worked at the XR-Lab HLE in Hilversum
+                  together with 10 game art students and 11 game development students on a part of the VR shooter
+                  After the fall made by Vertigo games. We had to do this in Unreal engine 5 instead of Unity in which After the fall is actually made with
+                  While making the game we met 2 developers that worked on After the fall and learned about the bugs the found and struggles they hadden
+                  while making the game.
+                </div>
+              </div>
+  
+              <div id="technical" style="display: none; visibility: invisible;">
+                <h2>Working with Unreal Engine 5</h2>
+                <div class="description-text">
+                  During this quarter I worked with Unreal Engine for the first time. I did not use the C++ editor yet and used blueprints instead, I still learned alot about the engine
+                  and its features. But I honestly don't really like the way alot of components are premade in great detail instead of Unity which activates you to create your own
+                  components. However I still want to learn more about the engine and using its C++ editor.
+                </div>
+                <h2>Zombie AI using unreal behaviour trees</h2>
+                <div class="description-text">
+                  The Unreal engine 5 behaviour trees are easy to use and learn. This behaviour tree handles the movement and atacking for the 
+                  zombies in After the fall - vertical slice.
+                  Every time the zombie walks somewhere he checks if he found the player if so he will go there and do his attack animation.
+                  Sadly I lost the source project and thus acces to the code files I made. This is the only screesnhot I can find of the behaviour tree.
+                </div>
+                <img src="/Image/EngineSnippets/Unreal/BehaviourTree.png" class="engine-snippet" alt="Unreal engine behaviour tree for zombies">
+              </div>
+              <footer>
+                   
+              </footer>
+            </div>
+        </div>
+     </body>
+
+    <script src="/langSwitch.js"></script>
+    <script src="/toggle.js"></script>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <Title>Portfolio Daan Duits</Title>
+        <link rel="icon" href="/Image/Icons/BBEngine.png">
+        <link rel="stylesheet" href="/CSS/style.css">
+        <link rel="stylesheet" href="/CSS/project.css">
+        <link rel="stylesheet" href="/CSS/devblog.css">
+    </head>
+    
+    <body>
+        <div id="page-container">
+            <div id="page-wrap">
+              <img class="Background" src="/Image/Background.png" alt="" >
+                <div class="Header">
+                    <figure class="Title">
+                        <h1>Daan Duits</h1>
+                        <h3>Unity gameplay developer</h3>
+                     </figure>
+                     <figure id="Buttons">
+                      <a href="Home.html">Home</a>
+                      <a href="aboutMe.html">About Me</a>
+                      <a href="Contact.html">Contact</a>
+                     </figure>
+                     <figure class="LanguageButtons">
+                        <img src="/Image/Logos/EN.png" alt="EN" onclick="switchLanguage('EN')">
+                        <img src="/Image/Logos/NL.png" alt="NL" onclick="switchLanguage('NL')">
+                     </figure>
+                </div>
+        
+                <h3>Bare Bones - Game Engine</h3>
+                <div id="video">
+                    <video src="/video/Devblog/BBEngine1.mp4" autoplay="autoplay" muted="muted" loop="loop"></video>
+                </div>
+
+                <div class="sources">
+                    <a class="source" href="https://github.com/DaanDuits/Bare-Bones"><img src="/Image/Logos/GithubLogo.png" alt="Github" title="Go to github page"></a>
+                </div>
+                <div id="practical-description"> 
+                    The Bare Bones engine is my own C++ game engine where I work on in my free time. For this
+                    I am following the Cherno on youtube's game engine. He explains very well how a game engine works and how you can make one. I want to try to make all
+                    the existing systems (like the input system) myself eventually when I am done following the playlist. I hope to learn alot about C++ and making games
+                    from a more backend perspective.<br>
+                    <br>
+                    I post a new blog post every Sunday.
+                </div>
+
+                <div id="blog-list">
+                    <figure id="border"></figure>
+                    <p id="date">Posted on</p>
+                    <p id="summary">Summary</p>
+                    <div id="blogs">
+                        <a href="Devblog/BBEngine/Post2.html" id="blog-post" class="post">
+                            <p id="post-date">15/10/2023</p>
+                            <p id="post-summary">Adding logging system with spdlog</p>
+                        </a>
+                        <a href="Devblog/BBEngine/Post1.html" id="blog-post" class="post">
+                            <p id="post-date">08/10/2023</p>
+                            <p id="post-summary">Project setup and application entry point</p>
+                        </a>
+                    </div>
+                </div>
+
+               <footer>
+                    
+               </footer>
+            </div>
+        </div>
+     </body>
+
+    <script src="/langSwitch.js"></script>
+    <script src="/blog.js"></script>
+</html>

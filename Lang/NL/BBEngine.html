@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <Title>Portfolio Daan Duits</Title>
+        <link rel="icon" href="/Image/Icons/BBEngine.png">
+        <link rel="stylesheet" href="/CSS/style.css">
+        <link rel="stylesheet" href="/CSS/project.css">
+        <link rel="stylesheet" href="/CSS/devblog.css">
+    </head>
+    
+    <body>
+        <div id="page-container">
+            <div id="page-wrap">
+              <img class="Background" src="/Image/Background.png" alt="" >
+                <div class="Header">
+                    <figure class="Title">
+                        <h1>Daan Duits</h1>
+                        <h3>Unity gameplay developer</h3>
+                     </figure>
+                     <figure id="Buttons">
+                        <a href="Home.html">Home</a>
+                        <a href="aboutMe.html">About Me</a>
+                        <a href="Contact.html">Contact</a>
+                     </figure>
+                     <figure class="LanguageButtons">
+                        <img src="/Image/Logos/EN.png" alt="EN" onclick="switchLanguage('EN')">
+                        <img src="/Image/Logos/NL.png" alt="NL" onclick="switchLanguage('NL')">
+                     </figure>
+                </div>
+        
+                <h3>Bare Bones - Game Engine</h3>
+                <div id="video">
+                    <video src="/video/Devblog/BBEngine1.mp4" autoplay="autoplay" muted="muted" loop="loop"></video>
+                </div>
+
+                <div class="sources">
+                    <a class="source" href="https://github.com/DaanDuits/Bare-Bones"><img src="/Image/Logos/GithubLogo.png" alt="Github" title="Ga naar github pagina"></a>
+                </div>
+
+                <div id="practical-description">
+                    De Bare Bones engine is mijn eigen C++ game engine waaraan ik in mijn vrije tijd aan werk. Ik volg 
+                    hiervoor de game engine series van the Cherno op youtube. Hij legd in zijn videos duidelijk 
+                    uit hoe een game engine werkt en hoe je er een kan maken. uiteindelijk wil ik
+                    alle bestaande systemen (zoals het input systeem) zelf proberen te maken als ik klaar ben met de playlist volgen. Ik hoop hiervan veel over C++ 
+                    te leren en het maken van games van een meer backend perspectief.<br>
+                    <br>
+                    Ik post een nieuwe blog post elke Zondag.
+                </div>
+                
+                <div id="blog-list">
+                    <figure id="border"></figure>
+                    <p id="date">Gepost op</p>
+                    <p id="summary">Beschrijving</p>
+                    <div id="blogs">
+                        <a href="Devblog/BBEngine/Post2.html" id="blog-post" class="post">
+                            <p id="post-date">15/10/2023</p>
+                            <p id="post-summary">Een logging system toevoegen met spdlog</p>
+                        </a>
+                        <a href="Devblog/BBEngine/Post1.html" id="blog-post" class="post">
+                            <p id="post-date">08/10/2023</p>
+                            <p id="post-summary">Project setup en application entry point</p>
+                        </a>
+                    </div>
+                </div>
+
+               <footer>
+                    
+               </footer>
+            </div>
+        </div>
+     </body>
+
+    <script src="/langSwitch.js"></script>
+    <script src="/blog.js"></script>
+</html>

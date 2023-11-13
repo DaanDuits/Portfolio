@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <Title>Portfolio Daan Duits</Title>
+        <link rel="icon" href="/Image/Icons/BCE.png">
+        <link rel="stylesheet" href="/CSS/style.css">
+        <link rel="stylesheet" href="/CSS/project.css">
+    </head>
+    
+    <body>
+        <div id="page-container">
+            <div id="page-wrap">
+              <img class="Background" src="/Image/Background.png" alt="" >
+                <div class="Header">
+                    <figure class="Title">
+                        <h1>Daan Duits</h1>
+                        <h3>Unity gameplay developer</h3>
+                     </figure>
+                     <figure id="Buttons">
+                        <a href="Home.html">Home</a>
+                        <a href="aboutMe.html">About Me</a>
+                        <a href="Contact.html">Contact</a>
+                     </figure>
+                     <figure class="LanguageButtons">
+                        <img src="/Image/Logos/EN.png" alt="EN" onclick="switchLanguage('EN')">
+                        <img src="/Image/Logos/NL.png" alt="NL" onclick="switchLanguage('NL')">
+                     </figure>
+                </div>
+        
+                <h3>Butter, Cheese and Eggs</h3>
+                
+                <div id="video">
+                    <video src="/video/BCE_EPIC_GAMEPLAY.mp4" autoplay="autoplay" muted="muted" loop="loop"></video>
+                </div>   
+                <div class="sources">
+                  <a class="source" href="https://github.com/DaanDuits/Interstellar-Parkour"><img src="/Image/Logos/GithubLogo.png" alt="Github" title="Go to github page"></a>
+                  <a class="download" href="Builds/Butter, Cheese and eggs.zip">Download</a>
+                </div>
+
+                <div class="toggle-container" onclick="Toggle()">
+                  <div class="toggle"></div>
+                  <div class="toggle-text">praktisch</div>
+                  <div class="toggle-text">technisch</div>
+                </div>
+
+                  <div id="practical">
+                    <div id="practical-description">
+                      Voor de eerste periode van mijn derde schooljaar heb ik bij het Neon Origins HLO gewerkt aan het implementeren van multiplayer functionaliteit
+                      in Operation Starfall. Om meer te leren over networking heb ik een boter, kaas en eieren demo gemaakt met de mirror networking package. mirror networking 
+                      is een van de beste networking libraries om te gebruiken in Unity omdat het bijna hetzelfde werkt als het officiele Unity networking systeem.
+                    </div>
+                    <div id="practical-description">Bekende bugs:
+                      Een gelijkspel laat de restart knop niet zien.
+                    </div>
+                    <a style="margin-top: 1vw; display: block;" href="https://mirror-networking.gitbook.io/docs/">https://mirror-networking.gitbook.io/docs/</a>
+                  </div>
+  
+                  <div id="technical" style="display: none; visibility: invisible;">
+                    <h2 style="max-width: 50vw; margin-left: auto; margin-right: auto;" >Hoe werkt multiplayer met Mirror networking?</h2>
+                    <div class="description">
+                      <div class="description-text">Met de mirror networking package kan je makkelijk multiplayer spellen maken.
+                        In deze documentatie laat ik zien hoe de mirror componenenten die ik heb gebruikt werken en wat ik er van heb geleerd. 
+                      </div>
+                      <h3>Hoe Werkt de NetworkManager</h3>
+
+                      <div class="description-text">In het NetworkManager component staan de fields Offline scene en Online scene. dit zijn de eerste scenes die worden geladen
+                        als er een client leaved, het spel opstart of joined.
+                      </div>
+                      <img src="/Image/EngineSnippets/Unity/NMScene_Management.png" class="engine-snippet" alt="Unity scene management in het NetworkManager component">
+
+                      <div class="description-text">In het NetworkManager component staat ook wat de speler prefab is en hoe hij ingespawned moet worden.
+                      </div>
+                      <img src="/Image/EngineSnippets/Unity/NMPlayer_Fields.png" class="engine-snippet" alt="Unity Player field in het NetworkManger component">
+
+                      <h3>Mirror Code Snippets</h3>
+
+                      <div class="description-text">Mirror heeft verschillende attributes voor hoe de server en clients met elkaar communiceren.
+                        De belangrijkste zijn:
+                        [Command]
+                        [ClientRpc]
+                        [SyncVar]
+
+                        er zijn ook syncable generics zoals SyncList en SyncDictionary.
+                      </div>
+
+                      <div class="description-text">Een Command attribute word gebruikt om vanaf een client met authority een functie op de server te callen
+                      </div>
+                      <div class="code-snippet">[Command] public void JouwFunctie()
+{
+    // Doe dingen op de server
+}</div>
+                      <div class="description-text">Je kan het ook zo schrijven als de client geen authority nodig heeft:
+                      </div>
+                      <div class="code-snippet">[Command(requiresAuthority = false)] public void JouwFunctie()
+{
+    // Doe dingen op de server
+}</div>
+
+                      <div class="description-text">Een client Rpc(Remote procedure call) is een functie die alleen vanaf de server gecalled mag worden.
+                        Hij word dan op alle clients gecalled.
+                      </div>
+                      <div class="code-snippet">[Command] public void JouwFunctie()
+{
+    RpcDoIets();
+}
+
+[ClientRpc] public void RpcDoIets()
+{
+  // Dit word gecalled op elke Client
+}</div>
+
+                      <div class="description-text">Syncvars zijn variabelen die automatisch op alle clients worden geupdate door de server.
+                      </div>
+                      <div class="code-snippet">[SyncVar] float Health = 0; // health blijft hetzelfde voor alle clients</div>
+    
+                      <div class="description-text">Syncable generics zijn generic classes die automatisch op alle clients worden geupdate door de server.
+                      </div>
+                      <div class="code-snippet">SyncList&lt;int&gt; numbers; // numbers blijft hetzelfde voor alle clients</div>
+
+                      <h3>UI</h3>
+
+                      <div class="description-text">Mirror heeft zijn eigen HUD component. Maar ik wou graag mijn eigen UI maken voor joinen en leaven dus maakte ik het NetworkUI script. De leaveButton
+                        is nodig voor wanneer de online scene word geladen en de input field is nodig voor het invoeren van een IP adres.
+                      </div>
+                      <img src="/Image/EngineSnippets/Unity/NetworkUI.png" class="engine-snippet" alt="Unity Player field in het NetworkManger component">
+
+                      <div class="description-text">Wanneer de join knop word ingedrukt word de OnJoin functie gecalled. Daarin word de mirror StartClient functie gecalled en word het networkAddress
+                        naar het IP in de input field gezet (localhost als die leeg is).
+                      </div>
+                      <div class="code-snippet">public void OnJoin()
+{
+    // Join actieve server
+    manager.StartClient();
+    manager.networkAddress = addressInput.text;
+}</div>
+                      <div class="description-text">Wanneer de host knop in word gedrukt word de OnHost functie gecalled. Daarin word de mirror StartHost functie gecalled die een server
+                        start op je computer.
+                      </div>
+                      <div class="code-snippet">public void OnHost()
+{
+    // Start niewe server
+    manager.StartHost();
+}</div>
+
+                      <div class="description-text">Wanneer de leave knop word ingedrukt word de OnLeave functie gecalled. Daarin word gecontrolleerd of jij de server host
+                        als dat zo is word door de StopHost functie de server gestopt. Als je een client bent word alleen de StopClient functie gecalled.
+                      </div>
+
+                      <div class="code-snippet">public void OnLeave()
+{
+    // Stop server
+    if (NetworkServer.active && NetworkClient.active)
+    {
+        manager.StopHost();
+    }
+
+    // Stop client
+    if (NetworkClient.active)
+    {
+        manager.StopClient();
+    }
+}</div>
+                      </div>
+                  </div>
+                       <footer>
+                            
+                       </footer>
+                    </div>
+        </div>
+     </body>
+
+    <script src="/langSwitch.js"></script>
+    <script src="/toggle.js"></script>
+    <script src="/codeCreator.js"></script>
+</html>

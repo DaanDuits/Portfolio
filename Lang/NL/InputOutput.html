@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <Title>Portfolio Daan Duits</Title>
+        <link rel="stylesheet" href="/CSS/style.css">
+        <link rel="stylesheet" href="/CSS/project.css">
+    </head>
+    
+    <body>
+        <div id="page-container">
+            <div id="page-wrap">
+              <img class="Background" src="/Image/Background.png" alt="" >
+              <div class="Header">
+                  <figure class="Title">
+                      <h1>Daan Duits</h1>
+                      <h3>Unity gameplay developer</h3>
+                   </figure>
+                   <figure id="Buttons">
+                      <a href="Home.html">Home</a>
+                      <a href="aboutMe.html">About Me</a>
+                      <a href="Contact.html">Contact</a>
+                   </figure>
+                   <figure class="LanguageButtons">
+                      <img src="/Image/Logos/EN.png" alt="EN" onclick="switchLanguage('EN')">
+                      <img src="/Image/Logos/NL.png" alt="NL" onclick="switchLanguage('NL')">
+                   </figure>
+              </div>
+        
+              <h3>Input output - FnaF 2+</h3>
+              <div id="video">
+                  <video src="/video/Showcase.mp4" autoplay="autoplay" muted="muted" loop="loop"></video>
+              </div>   
+              <div class="toggle-container" onclick="Toggle()">
+                <div class="toggle"></div>
+                <div class="toggle-text">praktisch</div>
+                <div class="toggle-text">technisch</div>
+              </div>
+
+              <div id="practical">
+                <div id="practical-description"> 
+                  In de derde periode van mijn tweede schooljaar heb ik met een Arduino gewerkt.
+                  Een Arduino is een kleine computer waarmee je input en output van verschillende componenten en apparaten kan
+                  besturen. Ik besloot hem te gebruiken in samen werking met Unity om een horror game te maken waarin je een knijpkat gebruikt als
+                  zaklamp. De game die dat ik ging maken een recreatie van Five nights at Freddy's zou zijn. Uiteindelijk had ik een knijpkat die gebruikt werd voor de 
+                  zaklamp en een handslinger met een dynamo voor het opwinden van de puppet box.
+                </div>
+              </div>
+  
+              <div id="technical" style="display: none; visibility: invisible;">
+                  <h2>het maken van een programma voor op de Arduino</h2>
+                <div class="description">
+                  <div class="description-text">
+                    De Arduino leest code in de coding language objective C, dit is eigenlijk gewoon C++ maar dan iets meer gesimplificeerd.
+                  </div>
+                  <div class="description-text">
+                    Een objective C script voor de Arduino ziet er ongeveer zo uit:
+                  </div>
+<div class="code-snippet">int val = 0;
+int val2 = 0;
+void setup() {
+  // zet hier je setup code, dit word een keer aangeroepen:
+ // pinMode(In, INPUT);
+  Serial.begin(9600); 
+}
+
+void loop() {
+  // zet je main code hier, dit blijft aangeroepen worden:
+  val = analogRead(A5);
+  val = val < 20 ? 0: val;
+  val2 = analogRead(A4);
+  val2 = val2 < 300 ? 0 : val2;
+  Serial.println(String(val2) + " " + String(val));
+}</div>
+                  <div class="description-text">
+                    In setup word een nieuwe serial gemaakt met de gegeven frequentie. 
+                    In loop zit wat er met de input moet gebeuren zoals de anologe port A5 word gelezen
+                    en dan goed gezet zodat mijn spel het kan gebruiken voor de zaklamp.
+                  </div>
+                  <h3>Hoe lees je de input in Unity</h3>
+                  <div class="description-text">
+                    Nu moet de input alleen nog gelezen worden in Unity. Gellukkig heeft .NET een SerialPort class in System.IO.Ports.
+                    Dit is hoe ik het heb gemaakt in mijn eigen ArduinoSerialCommunication class:
+                  </div>
+<div class="code-snippet">public class ArduinoSerialCommunication : MonoBehaviour
+{
+    SerialPort Serial;
+    public TMP_Dropdown dropdown;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        Serial = new SerialPort();
+
+        Serial.BaudRate = 9600;
+        Serial.PortName = PlayerPrefs.GetString("InputPort");
+        Serial.Parity = Parity.None;
+        Serial.DataBits = 8;
+        Serial.StopBits = StopBits.One;
+
+        Serial.Open();
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if (Serial.BytesToRead > 0)
+        {
+            string line = Serial.ReadLine();
+            string[] values = line.Split(' ');
+            LightBehaviour.inputValue = int.Parse(values[1]);
+            float val = int.Parse(values[0]);
+            val /= 400;
+            WindupBehaviour.speed = val;
+            Debug.Log(line);
+        }
+    }
+}</div>
+                  <div class="description-text">
+                    In start zoek ik naar de Serial port die ik heb geopend met de Arduino. In update check ik elke frame of er 
+                    bytes te lezen zijn vanaf de port als dat zo is split ik het naar de goede floats en zet ik het licht en de windup values goed.
+                  </div>
+                  <h3>De thingemabob</h3>
+                  <div class="description-text">
+                    De thingemabob is de naam van de naam die ik heb gegeven aan mijn Arduino setup. Hier zijn wat foto's die laten zien wat ik ervan heb geleerd
+                    om hem inelkaar te zetten.
+                  </div>
+                  <img src="/Image/EngineSnippets/InputOutput/FullSetup.jpg" class="engine-snippet" alt="De arduino met de dynamo en knipkat aangesloten">
+                  <div class="description-text">
+                    Toen ik de knijpkat binnen kreeg heb ik hem meteen uitelkaar gehaald om te kijken hoe hij werkte. Dit is de kant die de dynamo laat draaien wanneer
+                    je in de knijpkat knijpt.
+                  </div>
+                  <img src="/Image/EngineSnippets/InputOutput/1.jpg" class="engine-snippet" alt="Een van de knijpkat helfden het dynamo draait als je erin knijpt.">
+                  <div class="description-text">
+                    Dit is de kant die met de stroom van de dynamo de lampjes laat branden.
+                  </div>
+                  <img src="/Image/EngineSnippets/InputOutput/2.jpg" class="engine-snippet" alt="Een van de knijpkat helfden de lampjes regelt.">
+                  <div class="description-text">
+                    Daarna heb ik drie draden aangesloten zodat ik kan lezen hoeveel stroom er naar de lampjes gaan en hoe dat geregeld word.
+                  </div>
+                  <img src="/Image/EngineSnippets/InputOutput/3.jpg" class="engine-snippet" alt="De knijpkat helft met drie door mij aangesloten draden voor het lezen van de stroom">
+                  <div class="description-text">
+                    Daarna sloot ik de knijpkat weer en had ik er een gat in gesoldeerd zodat de draden uit konden steken.
+                  </div>
+                  <img src="/Image/EngineSnippets/InputOutput/4.jpg" class="engine-snippet" alt="De knijpkat weer dicht gezet met de drie draden die uitsteken door een gat.">
+                </div>
+              </div>
+             <footer>
+                  
+             </footer>
+          </div>
+      </div>
+     </body>
+
+    <script src="/langSwitch.js"></script>
+    <script src="/toggle.js"></script>
+    <script src="/codeCreator.js"></script>
+</html>

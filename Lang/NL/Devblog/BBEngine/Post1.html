@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <Title>Portfolio Daan Duits</Title> 
+        <link rel="stylesheet" href="/CSS/style.css">
+        <link rel="stylesheet" href="/CSS/project.css">
+    </head>
+    
+    <body>
+        <div id="page-container">
+            <div id="page-wrap">
+              <img class="Background" src="/Image/Background.png" alt="" >
+                <div class="Header">
+                    <figure class="Title">
+                        <h1>Daan Duits</h1>
+                        <h3>Unity gameplay developer</h3>
+                     </figure>
+                     <figure id="Buttons">
+                        <a href="/Lang/NL/Home.html">Home</a>
+                        <a href="/Lang/NL/aboutMe.html">About Me</a>
+                        <a href="/Lang/NL/Contact.html">Contact</a>
+                     </figure>
+                     <figure class="LanguageButtons">
+                        <img src="/Image/Logos/EN.png" alt="EN" onclick="switchLanguage('EN')">
+                        <img src="/Image/Logos/NL.png" alt="NL" onclick="switchLanguage('NL')">
+                     </figure>
+                </div>
+        
+                <h3>Bare Bones - Blog post 1</h3>
+                <div id="video">
+                    <video src="/video/Devblog/BBEngine1.mp4" autoplay="autoplay" muted="muted" loop="loop"></video>
+                </div>
+                <div class="toggle-container" onclick="Toggle()">
+                  <div class="toggle"></div>
+                  <div class="toggle-text">praktisch</div>
+                  <div class="toggle-text">technisch</div>
+                </div>
+
+                <div id="practical">
+                  <div id="practical-description">Deze week ben ik begonnen met het volgen van de eerste vijf van the Chernos Game Engine series playlist. 
+                    Hierin legd the Cherno uit hoe hij zijn game engines opzet en hoe je een entry point maakt. Ik heb hierdoor geleerd hoe C++ macros en visual studio dependencies werken.
+                  </div>
+                  <a style="margin-top: 1vw; display: block;" href="https://www.youtube.com/watch?v=JxIZbV_XjAs&list=PLlrATfBNZ98dC-V-N3m0Go4deliWHPFwT">https://www.youtube.com/watch?v=JxIZbV_XjAs&list=PLlrATfBNZ98dC-V-N3m0Go4deliWHPFwT</a>
+                </div>
+  
+                <div id="technical" style="display: none; visibility: invisible;">
+                    <h2>Opzetten van een game engine</h2>
+                    <div class="description">
+                      <div class="description-text">
+                        Dit is de Application class deze class deffineerd alle functies die het programma nodig heeft om te werken.
+                      </div>
+<div class="code-snippet">// Application class
+namespace BareBones {
+  class BB_API Application
+  {
+  public:
+    Application();
+    virtual ~Application();
+
+    void Run();
+  };
+
+  // To be defined in a client
+  Application* CreateApplication();
+}</div>
+                      <div class="description-text">
+                        In de EntryPoint.h word de main functie gecalled waarin de door de client aangegeven app word geinstantieerd en zijn Run functie word aangeroepen.
+                      </div>
+
+<div class="code-snippet">#pragma once
+
+#ifdef BB_PLATFORM_WINDOWS
+
+extern BareBones::Application* BareBones::CreateApplication();
+
+int main(int argc, char** argv)
+{
+  auto app = BareBones::CreateApplication();
+  app->Run();
+  delete app;
+}
+
+#endif</div>
+
+                      <div class="description-text">
+                        In het Core.h script word er gecontrolleerd wat de BB_API is dit is nodig om de benodigde classes en functies
+                        makkelijker te importeren en te exporteren vanaf de engine's .dll file naar de app's exe.
+                      </div>
+
+<div class="code-snippet">#pragma once
+
+#ifdef BB_PLATFORM_WINDOWS
+  #ifdef BB_BUILD_DLL
+    #define BB_API __declspec(dllexport)
+  #else
+    #define BB_API __declspec(dllimport)
+  #endif
+#else
+  #error Bare Bones only supports Windows!
+#endif</div>
+                  </div>
+              </div>
+             <footer>
+                  
+             </footer>
+          </div>
+      </div>
+     </body>
+
+    <script src="/langSwitch.js"></script>
+    <script src="/toggle.js"></script>
+    <script src="/codeCreator.js"></script>
+</html>
