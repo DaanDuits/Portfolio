@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang = "nl">
+    <head>
+        <title>Portfolio Daan Duits</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/x-icon" href="Images/ApocalypseTD.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <article class="Header">
+                <figure id="Back">
+                    <a class="Button" href="Projects.html">←</a>
+                </figure>
+                <figure id="Languages">
+                    <div onclick="ChangeEN()" id="EN">🇬🇧 EN</div>
+                    <div onclick="ChangeNL()" id="NL">🇳🇱 NL</div>
+                </figure>
+            </article>
+        </header>
+
+        <section id="Versions">
+            <h3>Download versies</h3>
+            <figure id="VersionsBox">
+                <figure id="Version">
+                    <a href="GameBuilds/ApocalypseTD/ApocalypseTD1_1Build.zip">1.1</a>
+                </figure>
+                <figure id="Version">
+                    <a href="GameBuilds/ApocalypseTD/ApocalypseTD1_0Build.zip">1.0</a>
+                </figure>
+            </figure>
+        </section>
+
+        <figure>
+            <article id="ProjectHeader">
+                <figure>
+                    <video src="Images/ApocalypseTD.mp4" loop autoplay muted></video>
+                </figure>
+                <section>
+                    <h1>Apocalypse tower defense</h1>
+                </section>
+            </article>
+            <article id="ProjectInfo">
+                <figure>
+                    <div>
+                        <p id="Info">Developers</p>
+                    </div>
+                    <div>
+                        <p>1</p>
+                    </div>
+                    <div>
+                        <p id="Info">Artists</p>
+                    </div>
+                    <div>
+                        <p>0</p>
+                    </div>
+                    <div>
+                        <p id="Info">Gemaakt op</p>
+                    </div>
+                    <div>
+                        <p>10/2022</p>
+                    </div>
+                    <div id="Itch">
+                        <a href="https://daanbanaan.itch.io/apocalypse-td" target="_blank"><img src="Images/ItchLogo.png" alt="Itch"></a>
+                    </div>
+                    <div id="Github">
+                        <a href="https://github.com/DaanDuits/Tower-Defense" target="_blank"><img src="Images/GitHubLogo.png" alt="Github"></a>
+                    </div>
+                </figure>   
+            </article>
+            <figure class="Buttons">
+                <div>
+                    <a href="#Introduction">Inleiding</a>
+                </div>
+                <div>
+                    <a href="#Gameplay">Gameplay</a>
+                </div>
+                <div>
+                    <a href="#Technical">Technisch</a>
+                </div>
+            </figure>
+            <figure class="ProjectArticle" id="Introduction">
+                <h3 id="Title">Inleiding</h3>
+                <p>
+                    Dit project heb ik gemaakt in mijn 2de periode van leerjaar 2. Het is gemaakt in unity en ik wil er graag verder aan werken omdat het mij een cool idee lijkt.
+                </p>
+            </figure>
+            <figure class="ProjectArticle" id="Gameplay">
+                <h3 id="Title">Gameplay</h3>
+                <p>
+                    Apocalypse tower defense is een strategisch tower defense spel in een post-apocalyptische omgeving.
+                </p>
+                <p>
+                    In het spel kan je drie saves maken, als je een save hebt aangemaakt krijg je de keuze uit meerdere levels. De levels zijn random gekozen uit 4 verschillende
+                    vormen. Aan het begin van elk level moet je een basis plaatsen, deze basis moet je verdedigen met muren en torens. er zijn 4 verschillende torens:
+                </p>
+                <ul>
+                    <li>
+                        AR toren
+                    </li>
+                    <li>
+                        SMG toren
+                    </li>
+                    <li>
+                        Shotgun toren
+                    </li>
+                    <li>
+                        Sniper toren
+                    </li>
+                </ul>
+                <p>
+                    Je kan elke toren 3 keer upgraden, elke keer als je een toren upgrade doet de toren meer schade en krijgt hij meer hp en een grotere range.
+                </p>
+            </figure>
+            <figure class="ProjectArticle" id="Technical">
+                <h3 id="Title">Technisch</h3>
+                <p>
+                    Hier staat alle documentatie voor de meest belangrijke features van dit project. 
+                </p>
+                <figure class="Buttons">
+                    <div>
+                        <a href="#Placing">Plaatsen van torens/muren</a>
+                    </div>
+                    <div>
+                        <a href="#Pathfinding">Pathfinding</a>
+                    </div>
+                    <div>
+                        <a href="#Upgrading">Upgraden</a>
+                    </div>
+                    <div>
+                        <a href="#Save/Load">Opslaan/Laden</a>
+                    </div>
+                </figure>
+                <h4 id="Placing">Plaatsen van torens/muren</h4>
+                <p>
+                    Torens plaatsen word geregeld door de BuildTower class. daarin zit een IEnumerator functie genaamd MoveBuildTower, deze functie instantieert alle objecten die nodig zijn tijdens het bouwen van een toren
+                    als de enumerator zorgt ervoor dat de functie door blijft gaan met de toren proberen te plaatsen totdat de linker of rechter muisknoppen ingedrukt zijn. tijdens de while loop volgt de toren de muis en als
+                    de linker muisknop word ingedrukt dan word hij in het midden van het geselecteerde vakje gezet met een schutter op dezelfde plek.
+                </p>
+                <div class="CodeSnippet">
+                    <pre>
+public IEnumerator MoveBuildTower(Tower tower)
+{
+    cancelButton.SetActive(true);
+    Button.ButtonClickedEvent cancelOnClick = cancelButton.GetComponent&ltButton&gt().onClick;
+    cancelOnClick.AddListener(CancelBuilding);
+    GameObject towerObject = Instantiate(tower.TowerPrefab);
+    GameObject overlay = Instantiate(Overlay);
+    shop.canBuild = false;
+    Collider2D collider = towerObject.GetComponent&ltCollider2D&gt();
+    if (collider != null)
+    {
+        towerObject.GetComponent&ltCollider2D&gt().enabled = false;
+    }
+    overlay.GetComponent&ltSpriteRenderer&gt().color = Green;
+    if (tower.shooterPrefab != null)
+    {
+        TowerBehaviour tB = tower.shooterPrefab.GetComponent&ltTowerBehaviour&gt();
+        if (tB.range &gt= 8f)
+            rangeCircle.transform.localScale = new Vector2(2, 2);
+        else
+            rangeCircle.transform.localScale = new Vector2(tB.range * 2, tB.range * 2);
+    }
+    while (true)
+    {
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        towerObject.transform.position = mousePos;
+        if (tower.shooterPrefab != null)
+        {
+            rangeCircle.SetActive(true);
+            rangeCircle.transform.position = mousePos;
+        }
+        overlay.transform.position = new Vector3(Mathf.Floor(mousePos.x) + 0.5f, Mathf.Floor(mousePos.y) + 0.5f);
+        if (Input.GetMouseButtonDown(1) || cancelled)
+        {
+            rangeCircle.SetActive(false);
+            cancelOnClick.RemoveAllListeners(); 
+            cancelButton.SetActive(false);
+            Destroy(overlay);
+            Destroy(towerObject);
+            cancelled = false;
+            shop.canBuild = true;
+            break;
+        }
+        if (CanPlace(towerObject, overlay.transform.position))
+        {
+            overlay.GetComponent&ltSpriteRenderer&gt().color = Green;
+            if (Input.GetMouseButtonDown(0))
+            {
+                rangeCircle.SetActive(false);
+                cancelOnClick.RemoveAllListeners();
+                cancelButton.SetActive(false);
+                shop.counter.Removeresources(tower.price);
+                towerObject.transform.position = new Vector3(Mathf.Floor(mousePos.x) + 0.5f, Mathf.Floor(mousePos.y) + 0.5f);
+                if (tower.shooterPrefab != null)
+                {
+                    GameObject shooter = Instantiate(tower.shooterPrefab, towerObject.transform);
+                    shooter.transform.position = towerObject.transform.position;
+                }
+                Destroy(overlay);
+                shop.canBuild = true;
+                if (collider != null)
+                {
+                    towerObject.GetComponent&ltCollider2D&gt().enabled = true;
+                }
+                break;
+            }
+        }
+        else
+        {
+            overlay.GetComponent&ltSpriteRenderer>().color = Red;
+        }
+        yield return null;
+    }
+}
+                    </pre>
+                </div>
+                <p>
+                    Tijdens het plaatsen word er een functie aangeroepen die controleerd of er een toren op het vakje waar de muis overheen gaat geplaats kan worden.
+                </p>
+                <div class="CodeSnippet">
+                    <pre>
+bool CanPlace(GameObject tower, Vector2 gridPos)
+{
+    GameObject[] objects = GameObject.FindObjectsOfType&ltGameObject&gt();
+    if (!tileMap.HasTile(tileMap.WorldToCell(gridPos)) || BuildWall.instance.noBuildArea.Any(p =&gt p == gridPos))
+        return false;
+    foreach (GameObject o in objects)
+    {
+        if (o != tower && (Vector2)o.transform.position == gridPos && o.CompareTag("Tower") || o.CompareTag("Base") && Vector2.Distance(o.transform.position, gridPos) &lt= 1f)
+            return false;
+    }
+    return true;
+}
+                    </pre>
+                </div>
+                <h4 id="Pathfinding">Pathfinding</h4>
+                <p>
+                   De pathfinding is een implentatie van de A* tutorial serie van <a href="https://www.youtube.com/@SebastianLague" target="_blank">Sebastian Lague op youtube</a>.
+                </p>
+                <p>
+                    A* werkt door de map in te delen in allemaal vakjes, elk vakje heeft een koste die word berekent door de koste van de aanligende vakjes. De aanliggende vakjes
+                    kunnen opgevraagd worden met de GetNeighbours functie.
+                </p>
+                <div class="CodeSnippet">
+                    <pre>
+public List&ltNode> GetNeighbours(Node node)
+{
+    List&ltNode> neighbours = new List&ltNode>();
+    for (int x = -1; x &lt= 1; x++)
+    {
+        for (int y = -1; y &lt= 1; y++)
+        {
+            if (x == 0 && y == 0)
+                continue;
+            int checkX = node.gridX + x;
+            int checkY = node.gridY + y;
+            if (checkX >= 0 && checkX &lt gridSizeX && checkY >= 0 && checkY &lt gridSizeY && grid[checkX, checkY].walkable)
+            {
+                if (ec.level.firstTile.Any(p => p == grid[checkX, checkY].worldPos) && ec.level.firstTileDir.Any(p => p == new Vector2Int(x,y)))
+                {
+                    neighbours.Add(grid[checkX, checkY]);
+                    continue;
+                }
+                if (ec.level.entrance.Any(p => p == grid[checkX, checkY].worldPos) && ec.level.entranceDir.Any(p => p == new Vector2Int(x, y)))
+                {
+                    neighbours.Add(grid[checkX, checkY]);
+                    continue;
+                }
+                if ((tilemap.HasTile(tilemap.WorldToCell(grid[checkX, checkY].worldPos)) && tilemap.HasTile(tilemap.WorldToCell(node.worldPos))) || (ec.possibleSpawns.Contains(node.worldPos) && ec.possibleSpawns.Contains(grid[checkX, checkY].worldPos)))
+                {
+                    neighbours.Add(grid[checkX, checkY]);
+                }
+            }
+        }
+    }
+    return neighbours;
+}
+                    </pre>
+                </div>
+                <p>
+                    Elk pad word berekent door de over het hele veld elk vakje en hun naastliggende vakjes hun prijsen te vergelijken en te controleren of ze wel over dat vakje een pad mogen maken.
+                </p>
+                <div class="CodeSnippet">
+                    <pre>
+IEnumerator FindPath(Vector2 startPos, Vector2 targetPos, bool mainBase)
+{
+    Vector2[] wayPoints = new Vector2[0];
+    bool pathSucces = false;
+
+    Node startNode = grid.NodeFromWorldPoint(startPos, false);
+    Node targetNode;
+    switch (mainBase)
+    {
+        case false:
+            targetNode = grid.NodeFromWorldPoint(targetPos, false);
+            break;
+        case true:
+            targetNode = grid.NodeFromWorldPoint(targetPos, true);
+            break;
+    }
+
+    if (startNode.walkable && targetNode.walkable)
+    {
+        Heap&ltNode> openSet = new Heap&ltNode>(grid.MaxSize);
+        HashSet&ltNode> closedSet = new HashSet&ltNode>();
+        openSet.Add(startNode);
+
+        while (openSet.Count > 0)
+        {
+            Node currentNode = openSet.RemoveFirst();
+            closedSet.Add(currentNode);
+
+            if (currentNode == targetNode)
+            {
+                pathSucces = true;
+                break;
+            }
+
+            foreach (Node neighbour in currentNode.neighbours)
+            {
+                if (!neighbour.walkable || closedSet.Contains(neighbour))
+                {
+                    continue;
+                }
+
+                int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+                if (newMovementCostToNeighbour &lt neighbour.gCost || !openSet.Contains(neighbour))
+                {
+                    neighbour.gCost = newMovementCostToNeighbour;
+                    neighbour.hCost = GetDistance(neighbour, targetNode);
+                    neighbour.parent = currentNode;
+
+                    if (!openSet.Contains(neighbour))
+                        openSet.Add(neighbour);
+                    else
+                        openSet.UpdateItem(neighbour);
+                }
+            }
+        }
+    }
+    yield return null;
+    if (pathSucces)
+    {
+        wayPoints = RetracePath(startNode, targetNode);
+    }
+    requestManager.FinishedProcessingPath(wayPoints, pathSucces);
+}
+                    </pre>
+                </div>
+                <p>
+                    Om meerder paden te berekenen gebruikt het een aanvraag systeem dat ervoor zorgt dat er maar 1 pad per frame word berekent, 
+                    Ook is het makkelijker om een pad te maken omdat de zombies alleen een aanvraag voor een pad hoeven te doen.
+                </p>
+                <div class="CodeSnippet">
+                    <pre>
+public static void RequestPath(Vector2 pathStart, Vector2 pathEnd, Action&ltVector2[], bool> callback, bool mainBase)
+{
+    PathRequest newRequest = new PathRequest(pathStart, pathEnd, callback, mainBase);
+    instance.pathRequestQueue.Enqueue(newRequest);
+    instance.TryProcessNext();
+}
+
+struct PathRequest
+{
+    public Vector2 pathStart;
+    public Vector2 pathEnd;
+    public Action&ltVector2[], bool> callback;
+    public bool mainBase;
+    public PathRequest(Vector2 _start, Vector2 _end, Action&ltVector2[], bool> _callback, bool _mainBase)
+    {
+        pathStart = _start;
+        pathEnd = _end;
+        callback = _callback;
+        mainBase = _mainBase;
+    }
+}
+                    </pre>
+                </div>
+                <h4 id="Upgrading">Upgraden</h4>
+                <p>
+                    Het updgrade systeem 
+                </p>
+                <div class="CodeSnippet">
+                    <pre>
+
+                    </pre>
+                </div>
+                <h4 id="Save/Load">Opslaan/laden</h4>
+                <p>
+                   De pathfinding is een implentatie van de A* tutorial serie van <a href="https://www.youtube.com/@SebastianLague" target="_blank">Sebastian Lague op youtube</a>.
+                </p>
+                <p>
+
+                </p>
+                <div class="CodeSnippet">
+                    <pre>
+
+                    </pre>
+                </div>
+            </figure>
+        </figure>
+
+        <footer>
+            <article class="Footer">
+                <h3>Contact</h3>
+                <a href=mailto:daand04@gmail.com><img src="Images/GmailLogo.png" alt="E-mail"></a>
+                <a href="https://github.com/DaanDuits" target="_blank"><img src="Images/GitHubLogo.png" alt="Github"></a>
+                <a href="https://www.youtube.com/channel/UCR_bxOAkWsIU97_WbtgKmHQ" target="_blank"><img src="Images/YoutubeLogo.png" alt="Youtube"></a>
+                <a href="https://daanbanaan.itch.io/" target="_blank"><img src="Images/ItchLogo.png" alt="Itch"></a>
+            </article>
+        </footer>
+        <script src="script.js"></script>
+    </body>
+</html>

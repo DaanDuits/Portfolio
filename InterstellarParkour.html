@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang = "nl">
+    <head>
+        <title>Portfolio Daan Duits</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/x-icon" href="Images/Interstellar-Parkour.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <article class="Header">
+                <figure id="Back">
+                    <a class="Button" href="Projects.html">←</a>
+                </figure>
+                <figure id="Languages">
+                    <div onclick="ChangeEN()" id="EN">🇬🇧 EN</div>
+                    <div onclick="ChangeNL()" id="NL">🇳🇱 NL</div>
+                </figure>
+            </article>
+        </header>
+
+        <section id="Versions">
+            <h3>Download versies</h3>
+            <figure id="VersionsBox">
+                <figure id="Version">
+                    <a href="GameBuilds/InterstellarParkourBuild.zip">1.0</a>
+                </figure>
+            </figure>
+        </section>
+
+        <figure>
+            <article id="ProjectHeader">
+                <figure>
+                    <video src="Images/InterstellarParkour.mp4" loop autoplay muted></video>
+                </figure>
+                <section>
+                    <h1>Interstellar parkour</h1>
+                </section>
+            </article>
+            <article id="ProjectInfo">
+                <figure>
+                    <div>
+                        <p id="Info">Developers</p>
+                    </div>
+                    <div>
+                        <p>1</p>
+                    </div>
+                    <div>
+                        <p id="Info">Artists</p>
+                    </div>
+                    <div>
+                        <p>4</p>
+                    </div>
+                    <div>
+                        <p id="Info">Gemaakt op</p>
+                    </div>
+                    <div>
+                        <p>06/2022</p>
+                    </div>
+                    <div id="Itch">
+                        <a href="https://daanbanaan.itch.io/interstellar-parkour" target="_blank"><img src="Images/ItchLogo.png" alt="Itch"></a>
+                    </div>
+                    <div id="Github">
+                        <a href="https://github.com/DaanDuits/Interstellar-Parkour" target="_blank"><img src="Images/GitHubLogo.png" alt="Github"></a>
+                    </div>
+                </figure>
+            </article>
+            <figure class="Buttons">
+                <div>
+                    <a href="#Introduction">Inleiding</a>
+                </div>
+                <div>
+                    <a href="#Gameplay">Gameplay</a>
+                </div>
+                <div>
+                    <a href="#Technical">Technisch</a>
+                </div>
+            </figure>
+            
+            <figure class="ProjectArticle" id="Introduction">
+                <h3 id="Title">Inleiding</h3>
+                <p>
+                    Dit project heb ik gemaakt in mijn 4de periode van leerjaar 1 samen met 4 game artists. Het is gemaakt in unity en ik was de enige developer in het groepje.
+                    Ik heb het meest gewerkt aan het movementsysteem want dat is wel belangrijk voor een platformer.
+                </p>
+            </figure>
+            <figure class="ProjectArticle" id="Gameplay">
+                <h3 id="Title">Gameplay</h3>
+                <p>
+                    Interstellar parkour is een ruimte platformer waarin je moet parkouren om het level te halen.
+                </p>
+                <p>
+                    In het spel zijn 2 speelbare levels een heel kort level en een lang level. ze hebben allebij een andere achtergrond.
+                </p>
+                <p>
+            </figure>
+            <figure class="ProjectArticle" id="Technical">
+                <h3 id="Title">Technisch</h3>
+                <p>
+                    Hier staat alle documentatie voor de movement system van dit project.
+                </p>
+                <p>
+                    De speler kan lopen springen en waljumpen en aan objecten hangen, dit word geregeld door de PlayerMovement class.
+                </p>
+                <div class="CodeSnippet">
+                    <pre>
+
+private void Start()
+{
+    Cursor.lockState = CursorLockMode.Locked;
+    rb = this.GetComponent&ltRigidbody2D>();
+    animatorHolder = this.transform.GetChild(3).gameObject;
+    anim = animatorHolder.GetComponent&ltAnimator>();
+}
+
+private void OnCollisionEnter2D(Collision2D collision)
+{
+    if (collision.gameObject.tag == "MovingPlatform")
+        this.transform.parent = collision.transform;
+
+    if (collision.gameObject.tag == "Ceiling" && Physics2D.OverlapCircle(ceilingCheck.position, 0.1f, ceilingLayers))
+        isOnCeiling = true;
+}
+private void OnCollisionExit2D(Collision2D collision)
+{
+    if (collision.gameObject.tag == "MovingPlatform")
+        this.transform.parent = null;
+}
+
+private void Update()
+{
+
+    isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayers);
+
+    isOnWall = Physics2D.OverlapCircle(wallCheck.position, 0.1f, wallLayers);
+
+    if (!Physics2D.OverlapCircle(ceilingCheck.position, 0.1f, ceilingLayers))
+        isOnCeiling = false;
+
+    if (isGrounded || isOnWall)
+    CheckGroundedOnWall();
+
+    if (isOnCeiling)
+    {
+        rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -maxClimbingSpeed, maxClimbingSpeed), Mathf.Clamp(rb.velocity.y, 1, 1));
+        StartCoroutine(CheckForFall());
+        rb.velocity = new Vector2(rb.velocity.x, 1);
+
+        if (Input.GetButton("Jump"))
+            isOnCeiling = false;
+    }
+
+    FallingAndJumping();
+}
+void CheckGroundedOnWall()
+{
+    if (Input.GetButton("Jump") && isGrounded)
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        jumping = true;
+    }
+    else if (Input.GetButton("Jump") && isOnWall)
+    {
+        rb.AddForce(new Vector2(wallJumpingSpeed.x * -this.transform.localScale.x, wallJumpingSpeed.y), ForceMode2D.Impulse);
+
+        if (this.transform.localScale.x > 0 && !right)
+            Flip();
+
+        else if (this.transform.localScale.x < 0 && right)
+            Flip();
+    }
+    else if (isOnWall && !isGrounded)
+    {
+        rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
+        anim.SetBool("Wall", true);
+    }
+}
+
+private void FixedUpdate()
+{
+    float h = Input.GetAxisRaw("Horizontal");
+    rb.AddForce(new Vector2(h * runningSpeed, rb.velocity.y) * Time.deltaTime, ForceMode2D.Impulse);
+    if (!isOnCeiling)
+        rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), rb.velocity.y);
+
+    if (h != 0)
+        anim.SetBool("Running", true);
+
+    else
+        anim.SetBool("Running", false);
+
+    if (h > 0 && right)
+        Flip();
+
+    else if (h < 0 && !right)
+        Flip();
+
+    anim.SetBool("Wall", false);
+}
+
+void FallingAndJumping()
+{
+    if (!isGrounded && jumping && !anim.GetBool("Falling"))
+    {
+        anim.SetBool("Jump", true);
+        jumping = false;
+    }
+    else if(isGrounded)
+        anim.SetBool("Jump", false);
+
+    if (!isGrounded && !anim.GetBool("Jump"))
+        anim.SetBool("Falling", true);
+
+    else
+        anim.SetBool("Falling", false);
+}
+
+void Flip()
+{
+    Vector3 scale = this.transform.localScale;
+    this.transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
+    right = !right;
+}
+
+IEnumerator CheckForFall()
+{
+    Vector3 lastPos = this.transform.position;
+    float seconds = climbSeconds;
+    while (seconds > 0)
+    {
+        seconds -= Time.deltaTime;
+        if (lastPos != this.transform.position)
+            yield break;
+
+        lastPos = this.transform.position;
+        yield return new WaitForEndOfFrame();
+    }
+    isOnCeiling = false;
+}
+                    </pre>
+                </div>
+            </figure>
+        </figure>
+
+        <footer>
+            <article class="Footer">
+                <h3>Contact</h3>
+                <a href=mailto:daand04@gmail.com><img src="Images/GmailLogo.png" alt="E-mail"></a>
+                <a href="https://github.com/DaanDuits" target="_blank"><img src="Images/GitHubLogo.png" alt="Github"></a>
+                <a href="https://www.youtube.com/channel/UCR_bxOAkWsIU97_WbtgKmHQ" target="_blank"><img src="Images/YoutubeLogo.png" alt="Youtube"></a>
+                <a href="https://daanbanaan.itch.io/" target="_blank"><img src="Images/ItchLogo.png" alt="Itch"></a>
+            </article>
+        </footer>
+    </body>
+</html>

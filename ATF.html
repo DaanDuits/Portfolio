@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang = "nl">
+    <head>
+        <title>Portfolio Daan Duits</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/x-icon" href="Images/ATF.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <article class="Header">
+                <figure id="Back">
+                    <a class="Button" href="Projects.html">←</a>
+                </figure>
+                <figure id="Languages">
+                    <div onclick="ChangeEN()" id="EN">🇬🇧 EN</div>
+                    <div onclick="ChangeNL()" id="NL">🇳🇱 NL</div>
+                </figure>
+            </article>
+        </header>
+
+        <figure>
+            <article id="ProjectHeader">
+                <figure>
+                    <video src="Images/ATFvid.mp4" loop autoplay muted></video>
+                </figure>
+                <section>
+                    <h1>After the fall</h1>
+                </section>
+            </article>
+            <article id="ProjectInfo">
+                <figure>
+                    <div>
+                        <p id="Info">Developers</p>
+                    </div>
+                    <div>
+                        <p>12</p>
+                    </div>
+                    <div>
+                        <p id="Info">Artists</p>
+                    </div>
+                    <div>
+                        <p>10</p>
+                    </div>
+                    <div>
+                        <p id="Info">Gemaakt op</p>
+                    </div>
+                    <div>
+                        <p>12/2022</p>
+                    </div>
+                    <div id="Itch" class="Unavailable">
+                        <a><img src="Images/ItchLogo.png" alt="Itch" title="Unavailable"></a>
+                    </div>
+                    <div id="Github">
+                        <a href=" https://github.com/XR-lab/VerticalSlice_AfterTheFall/tree/master" target="_blank"><img src="Images/GitHubLogo.png" alt="Github"></a>
+                    </div>
+                </figure>
+            </article>
+            <figure class="Buttons">
+                <div>
+                    <a href="#Introduction">Inleiding</a>
+                </div>
+                <div>
+                    <a href="#Gameplay">Gameplay</a>
+                </div>
+                <div>
+                    <a href="#Technical">Technisch</a>
+                </div>
+            </figure>
+            <figure class="ProjectArticle" id="Introduction">
+                <h3 id="Title">Inleiding</h3>
+                <p>
+                    Voor dit project heb ik in het XR-lab gewerkt aan een vertical-slice van het spel After the fall gemaakt door vertigo games. Het meest heb ik gewerkt aan de pathfinding en
+                    het gedrag van de zombies gewerkt.
+                </p>
+            </figure>
+            <figure class="ProjectArticle" id="Gameplay">
+                <h3 id="Title">Gameplay</h3>
+                <p>
+                    In het spel kan je drie saves maken, als je een save hebt aangemaakt krijg je de keuze uit meerdere levels. De levels zijn random gekozen uit 4 verschillende
+                    vormen. Aan het begin van elk level moet je een basis plaatsen, deze basis moet je verdedigen met muren en torens. er zijn 4 verschillende torens:
+                </p>
+            </figure>
+            <figure class="ProjectArticle" id="Technical">
+                <h3 id="Title">Technisch</h3>
+                <p>
+                    Hier staat alle documentatie voor wat ik heb gemaakt in dit project.
+                </p>
+                <h4>Zombie pathfinding/gedrag</h4>
+                <p>
+                    De zombies hebben verschillende states die ze uit kunnen voeren als er wat veranderd in hun omgeven bijvoorbeeld als ze de speler "zien" zullen ze naar de speler toelopen
+                    en aanvallen.
+
+                </p>
+                <div class="CodeSnippet">
+                    <img src="Images/BehaviOURtree.png" alt="Unreal engine behaviour tree" >
+                </div>
+            </figure>
+        </figure>
+
+        <footer>
+            <article class="Footer">
+                <h3>Contact</h3>
+                <a href=mailto:daand04@gmail.com><img src="Images/GmailLogo.png" alt="E-mail"></a>
+                <a href="https://github.com/DaanDuits" target="_blank"><img src="Images/GitHubLogo.png" alt="Github"></a>
+                <a href="https://www.youtube.com/channel/UCR_bxOAkWsIU97_WbtgKmHQ" target="_blank"><img src="Images/YoutubeLogo.png" alt="Youtube"></a>
+                <a href="https://daanbanaan.itch.io/" target="_blank"><img src="Images/ItchLogo.png" alt="Itch"></a>
+            </article>
+        </footer>
+    </body>
+</html>
