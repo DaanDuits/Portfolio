@@ -80,3 +80,83 @@ hr {
     width: 250px;
     height: 100px;
 }
+
+@media screen and (max-width: 1179px){
+    hr {
+        width: 300px;
+    }
+    
+    #board {
+        width: 270px;
+        height: 270px;
+    
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .tile {
+        width: 28px;
+        height: 28px;
+        border: 1px solid lightgray;
+    
+        font-size: 15px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .tile:hover {
+        cursor: pointer;
+        background-color: lightblue;
+    }
+    
+    #digits {
+        width: 270px;
+        height: 50px;
+    
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .number {
+        width: 24px;
+        height: 24px;
+        border: 1px solid black;
+    
+        margin: 2px;
+    
+        font-size: 15px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .number:hover {
+        cursor: pointer;
+    }
+    
+    .number-selected {
+        background-color: grey;
+    }
+    
+    .tile-start{
+        background-color: whitesmoke;
+    }
+    
+    .horizontal-line {
+        border-bottom: 1px solid black;
+    }
+    .vertical-line {
+        border-right: 1px solid black;
+    }
+    
+    #win-panel {
+        margin: 0 auto;
+        border: 1px solid black;
+        border-radius: 10px;
+        width: 250px;
+        height: 100px;
+    }
+}
