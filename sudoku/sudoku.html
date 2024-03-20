@@ -5,13 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sudoku</title>
 
-        <link rel="stylesheet" href="/CSS/sudoku.css">
+        <link rel="stylesheet" id="style" href="/sudoku/sudokuLightMode.css">
         <script src="/sudoku/sudoku.js"></script>
+        <script src="/sudoku/switchColorMode.js"></script>
     </head>
     <body>
         <h1>Sudoku</h1>
         <hr>
 
+        <button onclick="switchColor()" id="switch-button">Dark Mode</button>
         <div id="board"></div>
         <br>
         <div id="digits"></div>

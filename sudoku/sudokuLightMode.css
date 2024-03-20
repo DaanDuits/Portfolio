@@ -7,6 +7,10 @@ hr {
     width: 500px;
 }
 
+#switch-button {
+    margin-bottom: 10px;
+}
+
 #board {
     width: 450px;
     height: 450px;
@@ -21,6 +25,7 @@ hr {
     height: 48px;
     border: 1px solid lightgray;
 
+    color: grey;
     font-size: 20px;
     font-weight: bold;
     display: flex;
@@ -30,6 +35,17 @@ hr {
 .tile:hover {
     cursor: pointer;
     background-color: lightblue;
+}
+
+.tile-start{
+    color: black;
+}
+
+.tile-selected {
+    background-color: lightblue;
+}
+.tile-highlighted {
+    background-color: rgb(130, 204, 228);
 }
 
 #digits {
@@ -62,9 +78,7 @@ hr {
     background-color: grey;
 }
 
-.tile-start{
-    background-color: whitesmoke;
-}
+
 
 .horizontal-line {
     border-bottom: 1px solid black;
@@ -101,6 +115,7 @@ hr {
         border: 1px solid lightgray;
     
         font-size: 15px;
+        color: grey;
         font-weight: bold;
         display: flex;
         justify-content: center;
@@ -142,7 +157,7 @@ hr {
     }
     
     .tile-start{
-        background-color: whitesmoke;
+        color: black;
     }
     
     .horizontal-line {

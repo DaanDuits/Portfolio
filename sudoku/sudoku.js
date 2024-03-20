@@ -43,6 +43,7 @@ function setGame() {
     for (let r = 0; r < 9; r++) {
         for (let c = 0; c < 9; c++) {
             let tile = document.createElement("div");
+            tile.classList.add(board[r][c].toString());
             if (startBoard[r][c] != 0) {
                 tile.innerText = startBoard[r][c];
                 tile.classList.add("tile-start");
@@ -67,8 +68,7 @@ function selectNumber() {
     if (numSelected != null) {
         numSelected.classList.remove("number-selected");
     }
-    if (numSelected == this)
-    {
+    if (numSelected == this) {
         numSelected.classList.remove("number-selected");
         numSelected = null;
         return;
@@ -76,21 +76,41 @@ function selectNumber() {
 
     numSelected = this;
     numSelected.classList.add("number-selected");
+
+    if (tileSelected) {
+        
+        tileSelected.innerText = numSelected.id;
+        board[tileSelected.id[0]][tileSelected.id[2]] = parseInt(numSelected.id);
+        tileSelected.classList.replace(tileSelected.classList[0], numSelected.id);
+        if (isSudokuSolved(board)) {
+            document.getElementById("win-panel").style.display = "block"; // Corrected display property value
+        }
+
+        numSelected.classList.remove("number-selected");
+        numSelected = null;
+    }
 }
 
 function selectTile() {
-    if  (startBoard[this.id[0]][this.id[2]] != 0)
-    {
-        numSelected.classList.remove("number-selected");
-        numSelected = null;
-        return;
+    if (tileSelected) {
+        tileSelected.classList.remove("tile-selected");
+        let highlighted = Array.from(document.getElementsByClassName("tile-highlighted"));  // Convert to array
+        for (let i = 0; i < highlighted.length; i++) {
+            highlighted[i].classList.remove("tile-highlighted");
+        }
     }
-    if (numSelected) {
-        this.innerText = numSelected.id;
-        board[this.id[0]][this.id[2]] = parseInt(numSelected.id);
-        if (isSudokuSolved(board))
-        {
-            document.getElementById("win-panel").style = "display.block";
+    
+    tileSelected = this;
+    tileSelected.classList.add("tile-selected");
+
+    if (tileSelected.classList[0] != '0') {
+        let sameNumber = document.getElementsByClassName(tileSelected.classList[0]);
+        
+        for (let j = 0; j < sameNumber.length; j++) {
+            if (sameNumber[j] === this) {
+                continue;
+            }
+            sameNumber[j].classList.add("tile-highlighted");
         }
     }
 }
