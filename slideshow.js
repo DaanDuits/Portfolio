@@ -1,19 +1,32 @@
 const imageWrapper = document.querySelector('.ImageWrapper');
 const imageItems = document.querySelectorAll('.ImageWrapper > *');
 const pointsParent = document.querySelector('.Points');
-const points = document.querySelectorAll('.Points > *');
 const imageLength = imageItems.length;
 const perView = 1;
 let totalScroll = 1;
 let canMove = true;
 
+for (let i = 0; i < imageItems.length; i++)
+{
+  var newImg = document.createElement("img");
+  newImg.src = '/Image/Slideshow/Other.png';
+  newImg.onclick = function()
+  {
+    moveFromPoint(i+1);
+  };
+
+  pointsParent.appendChild(newImg);
+}
+const points = document.querySelectorAll('.Points > *');
+
 for (let i = 0; i < totalScroll; i++)
 {
   points[totalScroll - 1].src = '/Image/Slideshow/Other.png';
 }
+
 points[0].src = '/Image/Slideshow/Current.png';
 imageWrapper.style.setProperty('--per-view', perView);
-imageWrapper.insertAdjacentHTML('afterbegin', imageItems[4].outerHTML);
+imageWrapper.insertAdjacentHTML('afterbegin', imageItems[imageItems.length - 1].outerHTML);
 for(let i = 0; i < perView; i++) {
   imageWrapper.insertAdjacentHTML('beforeend', imageItems[i].outerHTML);
 }

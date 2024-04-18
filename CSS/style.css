@@ -6,7 +6,7 @@
 @font-face {
     font-family: TT;
     font-weight: bold;
-    src: url(/Font/TT-Interphases-Pro-Trial-Black.ttf); 
+    src: url(/Font/ROCKEB.ttf); 
 }
 html{
     font-family: TT;
@@ -54,7 +54,7 @@ body{
     font-size: 2vw;
 }.Title > h3{
     color: rgb(202, 45, 45);
-    font-size: 1.2vw;
+    font-size: 1.05vw;
     margin-top: 0.5vw;
     text-align: left;
 }

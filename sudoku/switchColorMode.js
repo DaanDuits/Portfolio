@@ -13,5 +13,4 @@ function switchColor()
     styleSheet.href = isLightmode ? darkMode : lightmode;
     isLightmode = !isLightmode;
     button.innerText = isLightmode ? "Dark Mode" : "Light Mode"
-    localStorage.setItem("lightMode", isLightmode);
 }
